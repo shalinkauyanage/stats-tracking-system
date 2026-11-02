@@ -1,0 +1,26 @@
+{
+  "name": "f1-career-archive-server",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Backend and calculation logic for the F1 Career Archive (Stage 1)",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:db": "node --test test-db/schema.integration.js test-db/import.integration.js",
+    "db:setup": "node scripts/setup-db.js",
+    "db:check": "node scripts/check-db.js",
+    "start": "node src/index.js",
+    "import:preview": "node scripts/import-excel.js preview",
+    "import:commit": "node scripts/import-excel.js commit",
+    "import:history": "node scripts/import-excel.js history"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
+  }
+}

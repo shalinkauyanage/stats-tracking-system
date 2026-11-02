@@ -1,0 +1,1364 @@
+{
+  "source": {
+    "file": "F1.xlsx",
+    "sha256": "930a7c75ee884603890d41fec4127fb49fac265ab6a8f0818f7a8b733c814661",
+    "extracted_at": "2026-10-22T05:53:24+00:00",
+    "note": "Raw values copied from the workbook. Nothing has been corrected."
+  },
+  "track_records": {
+    "columns": [
+      {
+        "column": "B",
+        "label": "Bahrain",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Bahrain",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 4,
+            "raw": "Arvid Lindblad     "
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 6,
+            "raw": "Max Verstappen "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "Max Verstappen       01:10.153            ",
+        "pole_time_raw": "Max Verstappen       01:07.827             "
+      },
+      {
+        "column": "C",
+        "label": "China",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of China",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 4,
+            "raw": "Charles Leclerc"
+          },
+          {
+            "row": 5,
+            "raw": "Kimi Antonelli  "
+          },
+          {
+            "row": 6,
+            "raw": "Kimi Antonelli  "
+          },
+          {
+            "row": 7,
+            "raw": "Max Verstappen "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Kimi Antonelli      \n01:10.092            ",
+        "pole_time_raw": "Kimi Antonelli      \n01:10.438"
+      },
+      {
+        "column": "D",
+        "label": "Saudi Arabia",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Saudi Arabia",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 6,
+            "raw": "Oliver Bearman             "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Lewis Hamilton\n01:12.137   ",
+        "pole_time_raw": "Max Verstappen       01:10.395          "
+      },
+      {
+        "column": "E",
+        "label": "United Arab Emirates",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of United Arab Emirates",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen "
+          },
+          {
+            "row": 6,
+            "raw": "Charles Leclerc"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Max Verstappen       01:08.700       ",
+        "pole_time_raw": "Max Verstappen       01:07.661       "
+      },
+      {
+        "column": "F",
+        "label": "Australia",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Australia",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "George Russell "
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Kimi Antonelli  "
+          },
+          {
+            "row": 7,
+            "raw": "Lewis Hamilton"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Alex Albon  \n01:02.628                ",
+        "pole_time_raw": "Arvid Lindblad  \n01:01.282                    "
+      },
+      {
+        "column": "G",
+        "label": "Japan",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Japan",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 7,
+            "raw": "Carlos Sainz                        "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "Max Verstappen       01:13.352                ",
+        "pole_time_raw": "Max Verstappen       01:11.759          "
+      },
+      {
+        "column": "H",
+        "label": "Miami",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of United States",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Oscar Piastri       "
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Max Verstappen"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "George Russell  \n01:09.553                    ",
+        "pole_time_raw": "Max Verstappen       01:10.669                   "
+      },
+      {
+        "column": "I",
+        "label": "Emilia-Romagna",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Italy",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Oscar Piastri    "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "Max Verstappen       01:01.706       ",
+        "pole_time_raw": "Max Verstappen       00:57.781       "
+      },
+      {
+        "column": "J",
+        "label": "Monaco",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Monaco",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Charles Leclerc"
+          },
+          {
+            "row": 4,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 5,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 6,
+            "raw": "Kimi Antonelli  "
+          },
+          {
+            "row": 7,
+            "raw": "Oscar Piastri    "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Lewis Hamilton \n00:53.770   ",
+        "pole_time_raw": "Kimi Antonelli\n00:52.121         "
+      },
+      {
+        "column": "K",
+        "label": "Spain",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Spain",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 4,
+            "raw": "George Russell "
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "George Russell    \n01:03.352      ",
+        "pole_time_raw": "Kimi Antonelli\n01:02.363      "
+      },
+      {
+        "column": "L",
+        "label": "Canada",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Canada",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Kimi Antonelli                  "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "Max Verstappen       00:50.295       ",
+        "pole_time_raw": "Max Verstappen       00:48.960       "
+      },
+      {
+        "column": "M",
+        "label": "Austria",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Austria",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Lando Norris"
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Max Verstappen       00:52.460   ",
+        "pole_time_raw": "Max Verstappen       00:52.704       "
+      },
+      {
+        "column": "N",
+        "label": "United Kingdom",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of United Kingdom",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 4,
+            "raw": "Oscar Piastri       "
+          },
+          {
+            "row": 5,
+            "raw": "Kimi Antonelli                  "
+          },
+          {
+            "row": 6,
+            "raw": "Fernando Alonso      "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Arvid Lindblad  \n01:13.228              ",
+        "pole_time_raw": "Kimi Antonelli\n01:10.587          "
+      },
+      {
+        "column": "O",
+        "label": "Belgium",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Belgium",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 4,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 5,
+            "raw": "George Russell "
+          },
+          {
+            "row": 6,
+            "raw": "Lewis Hamilton"
+          }
+        ],
+        "most_wins_raw": "Lewis Hamilton (2)",
+        "fastest_lap_raw": "Kimi Antonelli\n01:25.712           ",
+        "pole_time_raw": "Kimi Antonelli\n01:24.506          "
+      },
+      {
+        "column": "P",
+        "label": "Hungary",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Hungary",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Charles Leclerc"
+          },
+          {
+            "row": 5,
+            "raw": "Oscar Piastri       "
+          },
+          {
+            "row": 6,
+            "raw": "Oscar Piastri       "
+          }
+        ],
+        "most_wins_raw": "Oscar Piastri (2)",
+        "fastest_lap_raw": "George Russell    \n01:01.208               ",
+        "pole_time_raw": "George Russell    \n00:59.208     "
+      },
+      {
+        "column": "Q",
+        "label": "Netherlands",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Netherlands",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 4,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 5,
+            "raw": "George Russell "
+          },
+          {
+            "row": 6,
+            "raw": "Fernando Alonso      "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Gabriel Bortoleto\n00:56.255        ",
+        "pole_time_raw": "George Russell    \n00:54.255          "
+      },
+      {
+        "column": "R",
+        "label": "Italy",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Italy",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Max Verstappen       01:06.561   ",
+        "pole_time_raw": "George Russell    \n01:04.463      "
+      },
+      {
+        "column": "S",
+        "label": "Azerbaijan",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Azerbaijan",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Kimi Antonelli                  "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Max Verstappen       01:12.877    ",
+        "pole_time_raw": "Max Verstappen       01:10.533       "
+      },
+      {
+        "column": "T",
+        "label": "Singapore",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Singapore",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Arvid Lindblad     "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Max Verstappen       01:08.359       ",
+        "pole_time_raw": "Max Verstappen       01:06.364       "
+      },
+      {
+        "column": "U",
+        "label": "United States",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of United States",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 4,
+            "raw": "Lewis Hamilton"
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Oscar Piastri       \n01:15.868      ",
+        "pole_time_raw": "Max Verstappen       01:11.405       "
+      },
+      {
+        "column": "V",
+        "label": "Mexico",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Mexico",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "George Russell        "
+          },
+          {
+            "row": 4,
+            "raw": "Fernando Alonso      "
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen"
+          },
+          {
+            "row": 6,
+            "raw": "Oscar Piastri       "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Max Verstappen       00:58.646           ",
+        "pole_time_raw": "Max Verstappen       00:57.163            "
+      },
+      {
+        "column": "W",
+        "label": "Brazil",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Brazil",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen       "
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen       "
+          },
+          {
+            "row": 5,
+            "raw": "Max Verstappen       "
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (3)",
+        "fastest_lap_raw": "Esteban Ocon  \n00:58.633              ",
+        "pole_time_raw": "Max Verstappen \n00:58.519      "
+      },
+      {
+        "column": "X",
+        "label": "Las Vegas",
+        "label_kind": "plain_text",
+        "flag_text": "Image of United States",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Max Verstappen       "
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen       "
+          },
+          {
+            "row": 5,
+            "raw": "Lando Norris"
+          }
+        ],
+        "most_wins_raw": "Max Verstappen (2)",
+        "fastest_lap_raw": "Lando Norris      \n01:11:775      ",
+        "pole_time_raw": "Lando Norris      \n01:11:561   "
+      },
+      {
+        "column": "Y",
+        "label": "Qatar",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Qatar",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "George Russell               "
+          },
+          {
+            "row": 4,
+            "raw": "George Russell               "
+          },
+          {
+            "row": 5,
+            "raw": "Kimi Antonelli              "
+          }
+        ],
+        "most_wins_raw": "George Russell (2)",
+        "fastest_lap_raw": "Kimi Antonelli      \n01:03.724",
+        "pole_time_raw": "Kimi Antonelli      \n01:02.341    "
+      },
+      {
+        "column": "Z",
+        "label": "Portugal",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Portugal",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lewis Hamilton             "
+          },
+          {
+            "row": 4,
+            "raw": "Kimi Antonelli            "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Kimi Antonelli      \n00:57.684",
+        "pole_time_raw": "Kimi Antonelli      \n00:55.367"
+      },
+      {
+        "column": "AA",
+        "label": "Turkey",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Turkey",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Kimi Antonelli                  "
+          },
+          {
+            "row": 4,
+            "raw": "Kimi Antonelli                  "
+          }
+        ],
+        "most_wins_raw": "Kimi Antonelli (2)",
+        "fastest_lap_raw": "Kimi Antonelli      \n00:59.845 ",
+        "pole_time_raw": "Kimi Antonelli      \n00:58.225    "
+      },
+      {
+        "column": "AB",
+        "label": "Germany",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Germany",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lewis Hamilton             "
+          },
+          {
+            "row": 4,
+            "raw": "Kimi Antonelli                  "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Kimi Antonelli      \n00:53.968",
+        "pole_time_raw": "Kimi Antonelli      \n00:52.937"
+      },
+      {
+        "column": "AC",
+        "label": "Tuscany",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of Tuscany",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lando Norris"
+          },
+          {
+            "row": 4,
+            "raw": "Max Verstappen       "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Kimi Antonelli      01:06.729            ",
+        "pole_time_raw": "Max Verstappen \n01:04.729      "
+      },
+      {
+        "column": "AD",
+        "label": "France",
+        "label_kind": "linked_entity",
+        "flag_text": "Image of France",
+        "winners": [
+          {
+            "row": 3,
+            "raw": "Lewis Hamilton             "
+          },
+          {
+            "row": 4,
+            "raw": "Kimi Antonelli                  "
+          }
+        ],
+        "most_wins_raw": "(=)",
+        "fastest_lap_raw": "Lando Norris      \n01:19.210",
+        "pole_time_raw": "Lewis Hamilton\n01:16.673"
+      }
+    ],
+    "excel_error_cells_in_header_rows": 57
+  },
+  "driver_stats": {
+    "headers": [
+      "Name",
+      "Grand Prix",
+      "2nd",
+      "3rd",
+      "Podiums",
+      "Pole",
+      "P1 + FL + GP",
+      "Fatest Lap",
+      "D.N.F",
+      "M.P.S",
+      "Points",
+      "Drivers Championships",
+      "Constructors Championships"
+    ],
+    "rows": [
+      {
+        "row": 3,
+        "name_raw": "Max Verstappen    Red Bull Racing",
+        "wins": 42,
+        "second_places": 12,
+        "third_places": 10,
+        "podiums": 64,
+        "poles": 43,
+        "p1_fl_gp": 26,
+        "fastest_laps": 33,
+        "dnfs": 2,
+        "mps": 450,
+        "points": 1479,
+        "drivers_titles": 2,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Red Bull Racing"
+        ]
+      },
+      {
+        "row": 4,
+        "name_raw": "Lewis Hamilton    Mercedes",
+        "wins": 15,
+        "second_places": 9,
+        "third_places": 10,
+        "podiums": 34,
+        "poles": 19,
+        "p1_fl_gp": 5,
+        "fastest_laps": 10,
+        "dnfs": 1,
+        "mps": 334,
+        "points": 1017,
+        "drivers_titles": 1,
+        "constructors_titles": 2,
+        "team_history_raw": [
+          "Ferrari",
+          "Mercedes"
+        ]
+      },
+      {
+        "row": 5,
+        "name_raw": "Lando Norris      McLaren",
+        "wins": 9,
+        "second_places": 11,
+        "third_places": 11,
+        "podiums": 31,
+        "poles": 2,
+        "p1_fl_gp": 1,
+        "fastest_laps": 5,
+        "dnfs": 3,
+        "mps": 312,
+        "points": 982,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "McLaren"
+        ]
+      },
+      {
+        "row": 6,
+        "name_raw": "George Russell        Mercedes",
+        "wins": 7,
+        "second_places": 16,
+        "third_places": 10,
+        "podiums": 33,
+        "poles": 10,
+        "p1_fl_gp": 2,
+        "fastest_laps": 15,
+        "dnfs": 1,
+        "mps": 350,
+        "points": 961,
+        "drivers_titles": null,
+        "constructors_titles": 2,
+        "team_history_raw": [
+          "Mercedes"
+        ]
+      },
+      {
+        "row": 7,
+        "name_raw": "Charles Leclerc        Ferrari",
+        "wins": 4,
+        "second_places": 13,
+        "third_places": 13,
+        "podiums": 30,
+        "poles": 3,
+        "p1_fl_gp": null,
+        "fastest_laps": 4,
+        "dnfs": null,
+        "mps": 266,
+        "points": 886,
+        "drivers_titles": null,
+        "constructors_titles": 2,
+        "team_history_raw": [
+          "Ferrari"
+        ]
+      },
+      {
+        "row": 8,
+        "name_raw": "Oscar Piastri         Red Bull Racing",
+        "wins": 7,
+        "second_places": 8,
+        "third_places": 14,
+        "podiums": 29,
+        "poles": 4,
+        "p1_fl_gp": null,
+        "fastest_laps": 6,
+        "dnfs": null,
+        "mps": 227,
+        "points": 841,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "McLaren",
+          "Red Bull Racing"
+        ]
+      },
+      {
+        "row": 9,
+        "name_raw": "Kimi Antonelli      Ferrari",
+        "wins": 13,
+        "second_places": 10,
+        "third_places": 5,
+        "podiums": 28,
+        "poles": 17,
+        "p1_fl_gp": 9,
+        "fastest_laps": 17,
+        "dnfs": 1,
+        "mps": 357,
+        "points": 840,
+        "drivers_titles": 1,
+        "constructors_titles": 2,
+        "team_history_raw": [
+          "Mercedes",
+          "Ferrari"
+        ]
+      },
+      {
+        "row": 10,
+        "name_raw": "Fernando Alonso   McLaren",
+        "wins": 3,
+        "second_places": 6,
+        "third_places": 7,
+        "podiums": 16,
+        "poles": 1,
+        "p1_fl_gp": null,
+        "fastest_laps": 3,
+        "dnfs": 1,
+        "mps": 206,
+        "points": 562,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Aston Martin",
+          "McLaren"
+        ]
+      },
+      {
+        "row": 11,
+        "name_raw": "Arvid Lindblad    Audi",
+        "wins": 2,
+        "second_places": 5,
+        "third_places": 9,
+        "podiums": 16,
+        "poles": 1,
+        "p1_fl_gp": null,
+        "fastest_laps": 4,
+        "dnfs": null,
+        "mps": 242,
+        "points": 532,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Racing Bulls",
+          "Red Bull Racing",
+          "Audi"
+        ]
+      },
+      {
+        "row": 12,
+        "name_raw": "Oliver Bearman      Aston Martin",
+        "wins": 1,
+        "second_places": 9,
+        "third_places": 3,
+        "podiums": 13,
+        "poles": 3,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": 1,
+        "mps": 176,
+        "points": 449,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Haas",
+          "Aston Martin"
+        ]
+      },
+      {
+        "row": 13,
+        "name_raw": "Carlos Sainz        Aston Martin",
+        "wins": 1,
+        "second_places": 3,
+        "third_places": 6,
+        "podiums": 10,
+        "poles": 1,
+        "p1_fl_gp": null,
+        "fastest_laps": 2,
+        "dnfs": 1,
+        "mps": 127,
+        "points": 294,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Williams",
+          "Aston Martin"
+        ]
+      },
+      {
+        "row": 14,
+        "name_raw": "Alex Albon           Williams",
+        "wins": null,
+        "second_places": null,
+        "third_places": 2,
+        "podiums": 2,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": 1,
+        "dnfs": null,
+        "mps": 59,
+        "points": 137,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Williams"
+        ]
+      },
+      {
+        "row": 15,
+        "name_raw": "Valtteri Bottas      Cadillac",
+        "wins": null,
+        "second_places": null,
+        "third_places": 2,
+        "podiums": 2,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": 1,
+        "dnfs": 1,
+        "mps": 65,
+        "points": 126,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Cadillac"
+        ]
+      },
+      {
+        "row": 16,
+        "name_raw": "Nico Hulkenberg     Williams",
+        "wins": null,
+        "second_places": 1,
+        "third_places": null,
+        "podiums": 1,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": 1,
+        "mps": 58,
+        "points": 124,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Audi",
+          "Williams"
+        ]
+      },
+      {
+        "row": 17,
+        "name_raw": "Sergio Perez         Cadillac",
+        "wins": null,
+        "second_places": 1,
+        "third_places": null,
+        "podiums": 1,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": 1,
+        "mps": 49,
+        "points": 104,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Cadillac"
+        ]
+      },
+      {
+        "row": 18,
+        "name_raw": "Isack Hadjar              Racing Bulls",
+        "wins": null,
+        "second_places": null,
+        "third_places": null,
+        "podiums": null,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": 4,
+        "mps": 27,
+        "points": 67,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Red Bull Racing",
+          "Racing Bulls"
+        ]
+      },
+      {
+        "row": 19,
+        "name_raw": "Pierre Gasly           Audi",
+        "wins": null,
+        "second_places": null,
+        "third_places": 1,
+        "podiums": 1,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": null,
+        "mps": 23,
+        "points": 63,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Alpine",
+          "Audi"
+        ]
+      },
+      {
+        "row": 20,
+        "name_raw": "Liam Lawson           Racing Bulls",
+        "wins": null,
+        "second_places": null,
+        "third_places": null,
+        "podiums": null,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": null,
+        "mps": 40,
+        "points": 60,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Racing Bulls"
+        ]
+      },
+      {
+        "row": 21,
+        "name_raw": "Esteban Ocon          Haas",
+        "wins": null,
+        "second_places": null,
+        "third_places": 1,
+        "podiums": 1,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": 2,
+        "dnfs": null,
+        "mps": 23,
+        "points": 54,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Haas"
+        ]
+      },
+      {
+        "row": 22,
+        "name_raw": "Gabriel Bortoleto    Alpine",
+        "wins": null,
+        "second_places": null,
+        "third_places": null,
+        "podiums": null,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": 1,
+        "dnfs": 1,
+        "mps": 22,
+        "points": 50,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Audi",
+          "Alpine"
+        ]
+      },
+      {
+        "row": 23,
+        "name_raw": "Lance Stroll             Alpine",
+        "wins": null,
+        "second_places": null,
+        "third_places": null,
+        "podiums": null,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": null,
+        "mps": 27,
+        "points": 46,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Aston Martin",
+          "Haas",
+          "Alpine"
+        ]
+      },
+      {
+        "row": 24,
+        "name_raw": "Franco Colapinto   Haas",
+        "wins": null,
+        "second_places": null,
+        "third_places": null,
+        "podiums": null,
+        "poles": null,
+        "p1_fl_gp": null,
+        "fastest_laps": null,
+        "dnfs": 1,
+        "mps": 10,
+        "points": 22,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "team_history_raw": [
+          "Alpine",
+          "Haas"
+        ]
+      }
+    ]
+  },
+  "team_stats": {
+    "headers": [
+      "Team Name",
+      "Wins",
+      "Podiums",
+      "Pole Positions",
+      "M.P.S",
+      "Points",
+      "Drivers",
+      "Constructors"
+    ],
+    "rows": [
+      {
+        "row": 3,
+        "team_raw": "Red Bull Racing",
+        "wins": 41,
+        "podiums": 74,
+        "poles": 43,
+        "mps": 692,
+        "points": 2025,
+        "drivers_titles": 2,
+        "constructors_titles": null,
+        "top_drivers_raw": [
+          "Max Verstappen 42   ",
+          "Arvid Lindblad    2",
+          "Oscar Piastri          2"
+        ]
+      },
+      {
+        "row": 4,
+        "team_raw": "Ferrari",
+        "wins": 18,
+        "podiums": 62,
+        "poles": 20,
+        "mps": 562,
+        "points": 1903,
+        "drivers_titles": 1,
+        "constructors_titles": 2,
+        "top_drivers_raw": [
+          "Lewis Hamilton    14",
+          "Charles Leclerc        4"
+        ]
+      },
+      {
+        "row": 5,
+        "team_raw": "McLaren",
+        "wins": 14,
+        "podiums": 57,
+        "poles": 5,
+        "mps": 495,
+        "points": 1823,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": [
+          "Lando Norris         9",
+          "Oscar Piastri          5"
+        ]
+      },
+      {
+        "row": 6,
+        "team_raw": "Mercedes",
+        "wins": 20,
+        "podiums": 60,
+        "poles": 26,
+        "mps": 707,
+        "points": 1801,
+        "drivers_titles": 1,
+        "constructors_titles": 2,
+        "top_drivers_raw": [
+          "Kimi Antonelli      13",
+          "George Russell        7",
+          "Lewis Hamilton        1"
+        ]
+      },
+      {
+        "row": 7,
+        "team_raw": "Aston Martin",
+        "wins": 3,
+        "podiums": 21,
+        "poles": 2,
+        "mps": 382,
+        "points": 900,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": [
+          "Fernando Alonso   3",
+          "Oliver Bearman   1",
+          "Carlos Sainz           1"
+        ]
+      },
+      {
+        "row": 8,
+        "team_raw": "Williams",
+        "wins": null,
+        "podiums": 8,
+        "poles": null,
+        "mps": 163,
+        "points": 431,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      },
+      {
+        "row": 9,
+        "team_raw": "Cadillac",
+        "wins": null,
+        "podiums": 2,
+        "poles": null,
+        "mps": 114,
+        "points": 230,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      },
+      {
+        "row": 10,
+        "team_raw": "Haas",
+        "wins": null,
+        "podiums": 2,
+        "poles": null,
+        "mps": 143,
+        "points": 211,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      },
+      {
+        "row": 11,
+        "team_raw": "Audi",
+        "wins": null,
+        "podiums": 1,
+        "poles": null,
+        "mps": 48,
+        "points": 174,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      },
+      {
+        "row": 12,
+        "team_raw": "Racing Bulls",
+        "wins": null,
+        "podiums": null,
+        "poles": null,
+        "mps": 60,
+        "points": 113,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      },
+      {
+        "row": 13,
+        "team_raw": "Alpine",
+        "wins": null,
+        "podiums": 1,
+        "poles": null,
+        "mps": 29,
+        "points": 85,
+        "drivers_titles": null,
+        "constructors_titles": null,
+        "top_drivers_raw": []
+      }
+    ]
+  }
+}

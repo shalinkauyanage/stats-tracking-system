@@ -1,0 +1,11 @@
+{
+  "name": "f1-career-archive",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal F1 / Monoposto career archive. Stage 1: database schema and calculation logic.",
+  "scripts": {
+    "test": "npm --prefix server test",
+    "test:db": "npm --prefix server run test:db",
+    "db:setup": "npm --prefix server run db:setup"
+  }
+}
