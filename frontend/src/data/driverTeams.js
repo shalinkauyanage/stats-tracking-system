@@ -21,15 +21,15 @@ const driverTeams = {
   "Kimi Antonelli": "Ferrari",
 
   // Williams
-  "Alex Albon": "Williams",
   "Nico Hulkenberg": "Williams",
+  "Sergio Perez": "Williams",
 
   // Racing Bulls
   "Isack Hadjar": "Racing Bulls",
   "Liam Lawson": "Racing Bulls",
 
   // Haas
-  "Esteban Ocon": "Haas",
+  "Alex Albon": "Haas",
   "Franco Colapinto": "Haas",
 
   // Alpine
@@ -38,7 +38,7 @@ const driverTeams = {
 
   // Cadillac
   "Valtteri Bottas": "Cadillac",
-  "Sergio Perez": "Cadillac",
+  "Esteban Ocon": "Cadillac",
 
   // Audi
   "Arvid Lindblad": "Audi",

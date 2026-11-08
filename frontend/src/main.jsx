@@ -6,6 +6,7 @@ import { GB, BH, CN, SA, AE, AU, JP, US, IT, MC, ES, CA, AT, BE, HU, NL, AZ, SG,
 import { seasonArchive } from './data/seasonArchive.js';
 import { allTimeRecords } from './data/allTimeRecords.js';
 import './styles.css';
+import DriverTeamTimeline from './DriverTeamTimeline';
 import driversBanner from './assets/banners/drivers-banner.png';
 import teamsBanner from './assets/banners/teams-banner.png';
 import circuitsBanner from './assets/banners/circuits-banner.png';
@@ -227,6 +228,11 @@ function App() {
     finally { setLoading(false); }
   }
   useEffect(() => { load(); }, []);
+  useEffect(() => {
+  console.log('DRIVER DATA:', JSON.stringify(data.drivers.slice(0, 3), null, 2));
+  console.log('TEAM DATA:', JSON.stringify(data.teams.slice(0, 3), null, 2));
+  console.log('TRACK RECORDS:', JSON.stringify(data.trackRecords, null, 2));
+}, [data]);
   async function openDetail(kind, item) {
     const key = kind === 'Drivers' ? 'drivers' : kind === 'Teams' ? 'teams' : 'circuits';
     const label = kind === 'Drivers' ? (item.display_name || item.name) : kind === 'Teams' ? item.name : item.gp_name;
@@ -237,9 +243,135 @@ function App() {
   const list = page === 'Drivers' ? data.drivers : page === 'Teams' ? data.teams : page === 'Circuits' ? data.circuits : [];
   const filtered = useMemo(() => {
     const rows = list.filter(x => JSON.stringify(x).toLowerCase().includes(search.toLowerCase()));
-    if (page === 'Drivers' || page === 'Teams') return rows.sort((a, b) => Number(b.legacy_totals?.points ?? b.points ?? 0) - Number(a.legacy_totals?.points ?? a.points ?? 0));
+    if (page === 'Drivers') {
+  return rows.sort((a, b) =>
+    Number(b.legacy_totals?.points ?? b.points ?? 0) -
+    Number(a.legacy_totals?.points ?? a.points ?? 0)
+  );
+}
+
+if (page === 'Teams') {
+  return rows.sort((a, b) => {
+    const getTotal = (team, field) =>
+      Number(team.legacy_totals?.[field] ?? team[field] ?? 0);
+
+    return (
+      getTotal(b, 'points') - getTotal(a, 'points') ||
+      getTotal(b, 'wins') - getTotal(a, 'wins') ||
+      getTotal(b, 'podiums') - getTotal(a, 'podiums') ||
+      getTotal(b, 'poles') - getTotal(a, 'poles')
+    );
+  });
+}
     return rows;
   }, [list, search, page]);
+  const getDatabaseRecord = (items, category, title, field, unit, detail) => {
+  const ranked = items
+    .map(item => ({
+      name: item.display_name || item.name,
+      value: Number(item.legacy_totals?.[field] ?? 0),
+    }))
+    .filter(item => Number.isFinite(item.value));
+
+  if (!ranked.length) return null;
+
+  const highest = Math.max(...ranked.map(item => item.value));
+
+  const leaders = ranked
+    .filter(item => item.value === highest)
+    .map(item => item.name);
+
+  return {
+  category,
+  title,
+  holder: leaders.join(' & '),
+  value: highest.toLocaleString('en-US'),
+  unit,
+  detail,
+  image: imageFor(
+    items.find(item =>
+      (item.display_name || item.name) === leaders[0]
+    ),
+    category === 'DRIVER RECORDS' ? 'Drivers' : 'Teams'
+    ),
+  };
+};
+const databaseRecords = [
+  // DRIVER RECORDS
+  getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most World Championships', 'drivers_titles', 'World championships', 'The highest number of Driver World Championships.'),
+  getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Race Wins', 'wins', 'Race victories', 'The highest number of race victories recorded by a driver.'),
+  getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Career Points', 'points', 'Championship points', 'The highest career points total recorded by a driver.'),
+  getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Podiums', 'podiums', 'Podium finishes', 'The highest number of career podium finishes.'),
+  getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Pole Positions', 'poles', 'Pole positions', 'The highest number of career pole positions.'),
+
+  // CONSTRUCTOR RECORDS
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Constructor Championships', 'constructors_titles', 'Championships', 'The highest number of Constructor Championships.'),
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Race Wins', 'wins', 'Race victories', 'The highest number of race victories recorded by a constructor.'),
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Career Points', 'points', 'Championship points', 'The highest career points total recorded by a constructor.'),
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Podiums', 'podiums', 'Podium finishes', 'The highest number of podium finishes recorded by a constructor.'),
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Pole Positions', 'poles', 'Pole positions', 'The highest number of pole positions recorded by a constructor.'),
+].filter(Boolean);
+const featuredRecords = [
+  databaseRecords.find(r =>
+    r.category === 'DRIVER RECORDS' &&
+    r.title === 'Most World Championships'
+  ),
+  databaseRecords.find(r =>
+    r.category === 'CONSTRUCTOR RECORDS' &&
+    r.title === 'Most Constructor Championships'
+  ),
+  databaseRecords.find(r =>
+    r.category === 'DRIVER RECORDS' &&
+    r.title === 'Most Race Wins'
+  ),
+  databaseRecords.find(r =>
+    r.category === 'CONSTRUCTOR RECORDS' &&
+    r.title === 'Most Race Wins'
+  ),
+].filter(Boolean);
+
+const databaseRecordTitles = [
+  'Most World Championships',
+  'Most Constructor Championships',
+  'Most Race Wins',
+  'Most Career Points',
+  'Most Podiums',
+  'Most Pole Positions',
+];
+
+const remainingRecords = [
+  // DRIVER RECORDS
+  ...[
+    'Most Career Points',
+    'Most Podiums',
+    'Most Pole Positions',
+    'Most Points in a Single Season',
+    'Most Wins in a Single Season',
+    'Most Consecutive Race Wins',
+  ].map(title =>
+    databaseRecords.find(r =>
+      r.category === 'DRIVER RECORDS' && r.title === title
+    ) ||
+    allTimeRecords.find(r =>
+      r.category === 'DRIVER RECORDS' && r.title === title
+    )
+  ).filter(Boolean),
+
+  // CONSTRUCTOR RECORDS
+  ...[
+    'Most Career Points',
+    'Most Podiums',
+    'Most Pole Positions',
+    'Most Points in a Single Season',
+  ].map(title =>
+    databaseRecords.find(r =>
+      r.category === 'CONSTRUCTOR RECORDS' && r.title === title
+    ) ||
+    allTimeRecords.find(r =>
+      r.category === 'CONSTRUCTOR RECORDS' && r.title === title
+    )
+  ).filter(Boolean),
+];
   const stats = [
     { label: 'Drivers archived', value: data.drivers.length, icon: Users, tone: 'red', note: 'Driverrecords' },
     { label: 'Teams archived', value: data.teams.length, icon: ShieldCheck, tone: 'blue', note: 'Constructor records' },
@@ -343,11 +475,17 @@ function App() {
 </div>
         
 
-        {['Drivers','Teams','Circuits'].includes(page) && <section className={`panel data-panel directory-${page.toLowerCase()}`}><div className="panel-heading list-heading"><div><span className="section-kicker">ARCHIVE DIRECTORY</span><h3>{page} <span className="heading-count">{filtered.length}</span></h3><p className="directory-hint">{page==='Drivers'?'Ranked by career points':page==='Teams'?'Constructor statistics and archived drivers':'Grand Prix circuit archive'}</p></div><div className="searchbox"><Search size={16}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder={`Search ${page.toLowerCase()}…`}/>{search&&<button onClick={()=>setSearch('')}><X size={14}/></button>}</div></div>{loading?<div className="loading-state"><RefreshCw className="spin"/> Loading archive records…</div>:filtered.length===0?<div className="empty-state"><div className="empty-icon"><Search size={23}/></div><strong>{search?'No matching records':'No records available yet'}</strong><p>{search?'Try another search term.':'When records are available, they will appear here automatically.'}</p></div>:<div className="table-wrap"><table><thead><tr><th>{page==='Drivers'?'DRIVER':page==='Teams'?'TEAM':'GRAND PRIX'}</th>
+        {['Drivers','Teams','Circuits'].includes(page) && <section className={`panel data-panel directory-${page.toLowerCase()}`}><div className="panel-heading list-heading"><div><h3>{page} <span className="heading-count">{filtered.length}</span></h3><p className="directory-hint">{page==='Drivers'?'Driver Standings':page==='Teams'?'Constructor Standings':'Circuit Records'}</p></div><div className="searchbox"><Search size={16}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder={`Search ${page.toLowerCase()}…`}/>{search&&<button onClick={()=>setSearch('')}><X size={14}/></button>}</div></div>{loading?<div className="loading-state"><RefreshCw className="spin"/> Loading archive records…</div>:filtered.length===0?<div className="empty-state"><div className="empty-icon"><Search size={23}/></div><strong>{search?'No matching records':'No records available yet'}</strong><p>{search?'Try another search term.':'When records are available, they will appear here automatically.'}</p></div>:<div className="table-wrap"><table><thead><tr><th>{page==='Drivers'?'DRIVER':page==='Teams'?'TEAM':'GRAND PRIX'}</th>
 {page==='Drivers' && <><th>CURRENT TEAM</th><th>WINS</th><th>PODIUMS</th><th>POLES</th><th>POINTS</th><th>WORLD TITLES</th></>}
 {page==='Teams' && <><th>DRIVERS LINEUP</th><th>WINS</th><th>PODIUMS</th><th>POLES</th><th>POINTS</th><th>CONSTRUCTOR TITLES</th></>}
 
-{page==='Circuits' && <><th>CIRCUIT</th><th>MOST WINS</th><th>FASTEST LAP</th><th>POLE TIME</th><th>STATUS</th></>}<th/></tr></thead><tbody>{filtered.map((x,i)=>{const title=page==='Drivers'?(x.display_name||x.name):page==='Teams'?x.name:x.gp_name; const trackRecord = page==='Circuits' ? data.trackRecords.find(r => String(r.label || '').trim().toLowerCase() === String(title || '').trim().toLowerCase()) : null; const fastestLap = parseTrackStat(trackRecord?.fastest_lap_raw); const poleTime = parseTrackStat(trackRecord?.pole_time_raw); const t=x.legacy_totals||{}; const img=imageFor(x,page); const team=driverTeam(x); const teamDrivers=data.drivers.filter(d=>driverTeam(d).toLowerCase() && driverTeam(d).toLowerCase()===String(x.name||'').toLowerCase()); const points=t.points??x.points; const titles=page==='Drivers'?(t.drivers_titles??t.world_titles??t.titles):(t.constructors_titles??t.constructor_titles??t.titles); return <tr key={x.id??i} onClick={()=>openDetail(page,x)}><td><div className="entity-cell">{img?<img className={`entity-photo ${page==='Teams'?`team-logo team-logo-${teamLogoSlug(x.name)}`:''}`} src={img} alt="" loading="lazy" onError={e=>{
+{page==='Circuits' && <><th>CIRCUIT</th><th>MOST WINS</th><th>FASTEST LAP</th><th>POLE TIME</th><th>STATUS</th></>}<th/></tr></thead><tbody>{filtered.map((x,i)=>{const title=page==='Drivers'?(x.display_name||x.name):page==='Teams'?x.name:x.gp_name; const trackRecord = page==='Circuits' ? data.trackRecords.find(r => String(r.label || '').trim().toLowerCase() === String(title || '').trim().toLowerCase()) : null; const fastestLap = parseTrackStat(trackRecord?.fastest_lap_raw); const poleTime = parseTrackStat(trackRecord?.pole_time_raw); const t=x.legacy_totals||{}; const img=imageFor(x,page); const team=driverTeam(x); const teamDrivers=data.drivers.filter(d=>driverTeam(d).toLowerCase() && driverTeam(d).toLowerCase()===String(x.name||'').toLowerCase()); const points=t.points??x.points; const titles=page==='Drivers'?(t.drivers_titles??t.world_titles??t.titles):(t.constructors_titles??t.constructor_titles??t.titles); return <tr
+  key={x.id ?? i}
+  data-team={page === 'Teams'
+    ? String(x.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    : undefined}
+  onClick={() => openDetail(page, x)}
+><td><div className="entity-cell">{img?<img className={`entity-photo ${page==='Teams'?`team-logo team-logo-${teamLogoSlug(x.name)}`:''}`} src={img} alt="" loading="lazy" onError={e=>{
   const el = e.currentTarget;
 
   if (!el.dataset.triedApiImage) {
@@ -596,7 +734,7 @@ el.style.display = 'none';
   <div className="records-page">
     
 
-    {allTimeRecords.length > 0 && (
+    {featuredRecords.length > 0 && (
       <section className="records-featured-wrap">
         <div className="records-section-title">
           <div>
@@ -607,7 +745,7 @@ el.style.display = 'none';
         </div>
 
         <div className="records-featured-grid">
-          {allTimeRecords.slice(0, 4).map((record, index) => (
+          {featuredRecords.map((record, index) => (
             <article
               className={`records-feature-card ${
                 index % 2 === 0
@@ -674,10 +812,9 @@ el.style.display = 'none';
       'SINGLE-SEASON RECORDS',
       'STREAK RECORDS',
     ].map((category, categoryIndex) => {
-      const records = allTimeRecords.filter(
-        (record, index) =>
-          record.category === category && index >= 2
-      );
+      const records = remainingRecords.filter(
+  record => record.category === category
+);
 
       if (!records.length) return null;
 
@@ -788,14 +925,14 @@ el.style.display = 'none';
                 />
               )}
               <div className="profile-heading">
-                <span className="section-kicker">ARCHIVE PROFILE</span>
+                
                 <h2>{selected.label || 'Record details'}</h2>
                 <p className="modal-subtitle">
                   {selected.kind === 'Drivers'
-                    ? 'Driver career record'
+                    ? 'Driver Career'
                     : selected.kind === 'Teams'
-                    ? 'Constructor record'
-                    : 'Circuit archive record'}
+                    ? 'Constructor Record'
+                    : 'Circuit Record'}
                 </p>
               </div>
               {selected.kind === 'Teams' && currentTeamDrivers.length > 0 && (
@@ -844,15 +981,156 @@ el.style.display = 'none';
   </div>;
 }
 function EmptyPage({title,description,icon:Icon,count,loading}) { return <section className="panel empty-page"><div className="empty-icon large"><Icon size={28}/></div><span className="section-kicker">COMING FROM YOUR DATA</span><h2>{title}</h2><p>{description}</p><div className="empty-state-chip">{loading?'CHECKING ARCHIVE':`${count} RECORDS FOUND`}</div></section>; }
-function RecordPanel({title,icon:Icon,rows,loading,empty}) { return <section className="panel record-panel"><div className="panel-heading"><div className="record-title-icon"><Icon size={18}/></div><div><span className="section-kicker">ARCHIVE RECORDS</span><h3>{title}</h3></div><span className="heading-count">{rows.length}</span></div>{loading?<div className="loading-state"><RefreshCw className="spin"/> Loadingâ€¦</div>:rows.length===0?<div className="empty-state compact"><p>{empty}</p></div>:<div className="record-list">{rows.slice(0,12).map((r,i)=><div className="record-row" key={r.id??i}><span className="record-index">{String(i+1).padStart(2,'0')}</span><div className="record-main"><strong>{r.driver_name && r.gp_name ? `${r.driver_name} â€” ${r.gp_name}` : r.gp_name||r.driver_name||r.record_type||r.lap_time||`Record ${i+1}`}</strong><small>{r.year||r.circuit_name||r.driver_name||r.lap_time||'Historical record'}</small></div><ChevronRight size={15}/></div>)}</div>}</section>; }
+function RecordPanel({ title, icon: Icon, rows, loading, empty }) {
+  return (
+    <section className="panel record-panel">
+      <div className="panel-heading">
+        <div className="record-title-icon">
+          <Database size={18} />
+        </div>
+        <div>
+          <span className="section-kicker">ARCHIVE RECORDS</span>
+          <h3>{title}</h3>
+        </div>
+        <span className="heading-count">{rows.length}</span>
+      </div>
 
+      {loading ? (
+        <div className="loading-state">
+          <RefreshCw className="spin" /> Loading…
+        </div>
+      ) : rows.length === 0 ? (
+        <div className="empty-state compact">
+          <p>{empty}</p>
+        </div>
+      ) : (
+        <div className="record-list">
+          {rows.slice(0, 12).map((r, i) => (
+            <div className="record-row" key={r.id ?? i}>
+              <span className="record-index">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div className="record-main">
+                <strong>
+                  {r.driver_name && r.gp_name
+                    ? `${r.driver_name} — ${r.gp_name}`
+                    : r.gp_name || r.driver_name || r.record_type ||
+                      r.lap_time || `Record ${i + 1}`}
+                </strong>
+                <small>
+                  {r.year || r.circuit_name || r.driver_name ||
+                    r.lap_time || 'Historical record'}
+                </small>
+              </div>
+              <ChevronRight size={15} />
+            </div>
+          ))}
+        </div>
+      )}
+        </section>
+  );
+}
 
 function DetailContent({ data, kind }) {
   const totals = data.legacy_totals || {};
-  const history = data.season_history || data.winners || data.records || [];
+  const history = data.season_history || [];
 
-  const driverTitles = totals.drivers_titles ?? 0;
-  const constructorTitles = totals.constructors_titles ?? 0;
+  const driverTitles =
+    totals.drivers_titles ??
+    totals.world_titles ??
+    totals.titles ??
+    0;
+
+  const constructorTitles =
+    totals.constructors_titles ??
+    totals.constructor_titles ??
+    totals.titles ??
+    0;
+
+  const normalizeTeam = name =>
+    String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  // Season-specific championship portraits
+  const championshipDriverImage = (driverName, teamName) => {
+    const team = normalizeTeam(teamName);
+
+    const teamFolder = team.includes('redbull')
+      ? 'redbull'
+      : team.includes('mercedes')
+      ? 'mercedes'
+      : team.includes('ferrari')
+      ? 'ferrari'
+      : team;
+
+    const driver = String(driverName || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    return `/images/championship-drivers/${teamFolder}/${driver}.png`;
+  };
+
+  // All seasons in which this team won the Constructors' Championship
+  const teamSeasons = seasonArchive.filter(
+    season =>
+      normalizeTeam(season.constructorChampion) ===
+      normalizeTeam(data.name)
+  );
+
+  // Drivers' Championship winners for this team
+  const driverChampions = Object.values(
+    seasonArchive
+      .filter(
+        season =>
+          normalizeTeam(season.driverTeam) ===
+          normalizeTeam(data.name)
+      )
+      .reduce((groups, season) => {
+        const name = season.champion;
+
+        if (!groups[name]) {
+          groups[name] = {
+            driver_id: name,
+            driver_name: name,
+            team_name: season.driverTeam,
+            years: [],
+          };
+        }
+
+        groups[name].years.push(season.season);
+
+        return groups;
+      }, {})
+  );
+
+  // Constructors' Championship lineups and actual points
+  const constructorLineups = teamSeasons.map((season, index) => {
+    const constructorRecord = (season.constructors || []).find(
+      item =>
+        normalizeTeam(item.name) ===
+        normalizeTeam(season.constructorChampion)
+    );
+
+    return {
+      season_id: `${season.season}-${index}`,
+      year: season.season,
+      team_name: season.constructorChampion,
+      constructorPoints: constructorRecord?.points ?? null,
+
+      drivers: (season.constructorDrivers || []).map(name => {
+        const driverRecord = (season.drivers || []).find(
+          driver =>
+            normalizeTeam(driver.name) === normalizeTeam(name)
+        );
+
+        return {
+          driver_id: name,
+          driver_name: name,
+          points: driverRecord?.points ?? null,
+        };
+      }),
+    };
+  });
 
   return (
     <>
@@ -868,12 +1146,13 @@ function DetailContent({ data, kind }) {
           .map(([k, v]) => (
             <div key={k}>
               <small>{k.replaceAll('_', ' ')}</small>
-              <strong>{typeof v === 'number' ? fmt(v) : v}</strong>
+              <strong>
+                {typeof v === 'number' ? fmt(v) : v}
+              </strong>
             </div>
           ))}
       </div>
 
-      {/* Driver championship cards */}
       {kind === 'Drivers' && (
         <div className="detail-title-metrics">
           <div className="title-metric">
@@ -888,44 +1167,168 @@ function DetailContent({ data, kind }) {
         </div>
       )}
 
-      {/* Constructor championship card */}
+      {kind === 'Drivers' && (
+  <DriverTeamTimeline
+    driverName={data.display_name || data.name}
+  />
+)}
+
       {kind === 'Teams' && (
-        <div className="detail-title-metrics constructor-title-single">
-          <div className="title-metric">
-            <small>Constructor World Championships</small>
-            <strong>{fmt(constructorTitles)}</strong>
+        <>
+          <div className="detail-title-metrics constructor-title-single">
+            <div className="title-metric">
+              <small>Constructor World Championships</small>
+              <strong>{fmt(constructorTitles)}</strong>
+            </div>
+          </div>
+
+          {/* DRIVERS' CHAMPIONSHIP WINNERS */}
+          <div className="detail-section championship-history">
+            <h3>Drivers' Championship Winners</h3>
+
+           
+
+            {driverChampions.length === 0 ? (
+              <p className="detail-empty">
+                No Drivers' Championship history available.
+              </p>
+            ) : (
+              <div className="champion-driver-grid">
+                {driverChampions.map(driver => (
+                  <div
+                    className="champion-driver-card"
+                    key={driver.driver_id}
+                  >
+                    <img
+                      src={championshipDriverImage(
+                        driver.driver_name,
+                        driver.team_name
+                      )}
+                      alt={driver.driver_name}
+                      onError={e => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = imageFor(
+                          { display_name: driver.driver_name },
+                          'Drivers'
+                        );
+                      }}
+                    />
+
+                    <div className="champion-driver-info">
+                      <strong>{driver.driver_name}</strong>
+
+                      <span>World Champion</span>
+
+                      <div className="champion-years">
+                        {driver.years.map(year => (
+                          <span key={year}>{year}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+         {/* CONSTRUCTORS' CHAMPIONSHIP WINNING LINEUPS */}
+<div className="detail-section championship-history">
+  <h3>Constructors' Championship Winning Lineups</h3>
+
+
+  {constructorLineups.length === 0 ? (
+    <p className="detail-empty">
+      No Constructors' Championship lineups available.
+    </p>
+  ) : (
+    <div className="constructor-winning-seasons">
+      {constructorLineups.map(season => (
+        <div
+          className="constructor-winning-card"
+          key={season.season_id}
+        >
+          {/* SEASON HEADING */}
+          <div className="constructor-winning-heading">
+            <span>CHAMPIONSHIP</span>
+            <strong>{season.year}</strong>
+          </div>
+
+          {/* WINNING DRIVERS */}
+          <div className="constructor-winning-drivers">
+            {season.drivers.map(driver => (
+              <div
+                className="constructor-winning-driver"
+                key={driver.driver_id}
+              >
+                <img
+                  src={championshipDriverImage(
+                    driver.driver_name,
+                    season.team_name
+                  )}
+                  alt={driver.driver_name}
+                  onError={e => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = imageFor(
+                      { display_name: driver.driver_name },
+                      'Drivers'
+                    );
+                  }}
+                />
+
+                <strong>{driver.driver_name}</strong>
+              </div>
+            ))}
+          </div>
+
+          {/* CONSTRUCTOR TOTAL POINTS — RIGHT SIDE */}
+          <div className="constructor-winning-total">
+            <span>CONSTRUCTOR TOTAL</span>
+            <strong>
+              {season.constructorPoints != null
+                ? `${fmt(season.constructorPoints)} PTS`
+                : '—'}
+            </strong>
           </div>
         </div>
-      )}
+      ))}
+    </div>
+  )}
+</div>
+</>
+)}
 
-      {/* Keep history only for circuits */}
-      {kind === 'Circuits' && (
-        <div className="detail-section">
-          <h3>Circuit records & winners</h3>
+     
+{kind === 'Circuits' && (
+  <div className="detail-section circuit-history">
 
-          {history.length === 0 ? (
-            <p className="detail-empty">
-              No additional history is stored for this record yet.
-            </p>
-          ) : (
-            history.slice(0, 20).map((r, i) => (
-              <div className="detail-history-row" key={r.id ?? i}>
-                <span>
-                  {r.year || r.driver_name || r.record_type || `Record ${i + 1}`}
-                </span>
-                <b>
-                  <span className="record-number">{i + 1}</span>
-                </b>
-              </div>
-            ))
-          )}
-        </div>
-      )}
+    {/* CIRCUIT WINNERS */}
+    <h3>Grand Prix Winners</h3>
+
+    {!data.winners || data.winners.length === 0 ? (
+      <p className="detail-empty">
+        No Grand Prix winner records available yet.
+      </p>
+    ) : (
+      <div className="circuit-winner-list">
+  {data.winners.map((winner, index) => (
+    <div className="detail-history-row" key={winner.id ?? index}>
+      <span className="circuit-winner-number">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <b>{winner.driver_name || 'Unknown Driver'}</b>
+    </div>
+  ))}
+</div>
+   
+    )}
+
+  </div>
+ )}
+
     </>
   );
 }
 
 
-
-createRoot(document.getElementById('root')).render(<App/>);
-
+createRoot(document.getElementById('root')).render(<App />);

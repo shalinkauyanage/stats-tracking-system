@@ -17,6 +17,7 @@ export const seasonArchive = [
     constructorChampion: 'Ferrari',
     constructorImage: '/src/data/images/ferrari.png',
     teamTheme: 'ferrari',
+    constructorDrivers: ['Lewis Hamilton', 'Charles Leclerc'],
 
     drivers: [
       { name: 'Max Verstappen', points: 450 },
@@ -52,6 +53,7 @@ export const seasonArchive = [
     constructorChampion: 'Ferrari',
     constructorImage: '/src/data/images/ferrari.png',
     teamTheme: 'ferrari',
+    constructorDrivers: ['Lewis Hamilton', 'Charles Leclerc'],
 
     drivers: [
       { name: 'Lewis Hamilton', points: 334 },
@@ -87,6 +89,7 @@ export const seasonArchive = [
     constructorChampion: 'Mercedes',
     constructorImage: '/src/data/images/mercedes.png',
     teamTheme: 'mercedes',
+    constructorDrivers: ['George Russell', 'Kimi Antonelli'],
 
     drivers: [
       { name: 'Max Verstappen', points: 450 },
@@ -122,6 +125,7 @@ export const seasonArchive = [
     constructorChampion: 'Mercedes',
     constructorImage: '/src/data/images/mercedes.png',
     teamTheme: 'mercedes',
+    constructorDrivers: ['George Russell', 'Kimi Antonelli'],
 
     drivers: [
       { name: 'Kimi Antonelli', points: 324 },
@@ -137,6 +141,41 @@ export const seasonArchive = [
       { name: 'Redbull Racing', points: 414 },
       { name: 'Aston Martin', points: 382 },
       { name: 'Ferrari', points: 378 },
+    ],
+  },
+  {
+    season: 'Season 05',
+
+    // Drivers' Championship — Hall of Fame
+    champion: 'Max Verstappen',
+    championImage: '/src/data/images/Max Verstappen.png',
+    driverTeam: 'Red Bull Racing',
+    driverTeamImage: '/src/data/images/redbullracing.png',
+    driverTheme: 'redbull',
+    grandPrixWins: 8,
+    podiums: 14,
+    totalPoints: 328,
+
+    // Constructors' Championship — Seasons page
+    constructorChampion: 'Red Bull Racing',
+    constructorImage: '/src/data/images/redbullracing.png',
+    teamTheme: 'redbull',
+    constructorDrivers: ['Max Verstappen', 'Oscar Piastri'],
+
+    drivers: [
+      { name: 'Max Verstappen', points: 328 },
+      { name: 'Lewis Hamilton', points: 262 },
+      { name: 'Lando Norris', points: 236 },
+      { name: 'Nico Hulkenberg', points: 215 },
+      { name: 'Oliver Bearman', points: 212 },
+    ],
+
+    constructors: [
+      { name: 'RedBull Racing', points: 529 },
+      { name: 'Mercedes', points: 436 },
+      { name: 'McLaren', points: 414 },
+      { name: 'Aston Martin', points: 362 },
+      { name: 'Williams', points: 348 },
     ],
   },
 ];

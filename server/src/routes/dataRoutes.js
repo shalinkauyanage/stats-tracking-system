@@ -35,16 +35,97 @@ export function createDataRouter(pool) {
   });
   router.get('/teams', handle(async () => get('SELECT * FROM teams ORDER BY name')));
   router.get('/teams/:id', async (req, res, next) => {
-    const id = idParam(req, res); if (id === null) return;
-    try {
-      const rows = await get('SELECT * FROM teams WHERE id = ?', [id]);
-      if (!rows.length) return res.status(404).json({ error: { code: 'not_found', message: 'Team not found.' } });
-      const history = await get(`SELECT s.year, s.status, ts.wins, ts.podiums, ts.poles
-        FROM team_season_stats ts JOIN seasons s ON s.id = ts.season_id WHERE ts.team_id = ? ORDER BY s.year`, [id]);
-      const legacy = await get('SELECT * FROM legacy_team_totals WHERE team_id = ?', [id]);
-      res.json({ ...rows[0], legacy_totals: legacy[0] || null, season_history: history });
-    } catch (err) { next(err); }
-  });
+  const id = idParam(req, res);
+  if (id === null) return;
+
+  try {
+    const rows = await get(
+      'SELECT * FROM teams WHERE id = ?',
+      [id]
+    );
+
+    if (!rows.length) {
+      return res.status(404).json({
+        error: {
+          code: 'not_found',
+          message: 'Team not found.'
+        }
+      });
+    }
+
+    // Existing season statistics
+    const history = await get(`
+      SELECT s.year, s.status, ts.wins, ts.podiums, ts.poles
+      FROM team_season_stats ts
+      JOIN seasons s ON s.id = ts.season_id
+      WHERE ts.team_id = ?
+      ORDER BY s.year
+    `, [id]);
+
+    // Existing career totals
+    const legacy = await get(
+      'SELECT * FROM legacy_team_totals WHERE team_id = ?',
+      [id]
+    );
+
+    // Championship-winning drivers and seasons
+    const driverChampionships = await get(`
+      SELECT
+        s.year,
+        d.id AS driver_id,
+        d.display_name AS driver_name
+      FROM championship_history c
+      JOIN seasons s ON s.id = c.season_id
+      JOIN drivers d ON d.id = c.driver_id
+      WHERE c.team_id = ?
+        AND LOWER(c.championship_type) LIKE '%driver%'
+      ORDER BY s.year
+    `, [id]);
+
+    // Constructor championship seasons
+    const constructorChampionships = await get(`
+      SELECT
+        c.season_id,
+        s.year
+      FROM championship_history c
+      JOIN seasons s ON s.id = c.season_id
+      WHERE c.team_id = ?
+        AND LOWER(c.championship_type) LIKE '%constructor%'
+      ORDER BY s.year
+    `, [id]);
+
+    // Both drivers who represented the team in each
+    // constructor championship-winning season
+    const constructorLineups = await get(`
+      SELECT
+        c.season_id,
+        s.year,
+        d.id AS driver_id,
+        d.display_name AS driver_name
+      FROM championship_history c
+      JOIN seasons s ON s.id = c.season_id
+      JOIN season_entries e
+        ON e.season_id = c.season_id
+        AND e.team_id = c.team_id
+      JOIN drivers d ON d.id = e.driver_id
+      WHERE c.team_id = ?
+        AND LOWER(c.championship_type) LIKE '%constructor%'
+      ORDER BY s.year, d.display_name
+    `, [id]);
+
+    res.json({
+      ...rows[0],
+      legacy_totals: legacy[0] || null,
+      season_history: history,
+      driver_championships: driverChampionships,
+      constructor_championships: constructorChampionships,
+      constructor_lineups: constructorLineups
+    });
+
+  } catch (err) {
+    next(err);
+  }
+});
   router.get('/circuits', handle(async () => get('SELECT * FROM circuits ORDER BY sort_order, gp_name')));
   router.get('/circuits/:id', async (req, res, next) => {
     const id = idParam(req, res); if (id === null) return;

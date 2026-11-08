@@ -529,20 +529,76 @@ tbody tr:hover .row-open { border-color: #4d586d; color: #fff; }
   background: #1f2531; border: 1px solid #3a4353;
 }
 
-/* Per-team colours for the Teams table (row order = team order).
-   --team-a/--team-line colour the logo tile; --row-accent colours the hover bar. */
-.directory-teams tbody tr:nth-child(1)  { --team-a: #1c315c; --team-line: #4165a0; --row-accent: #3671c6; }
-.directory-teams tbody tr:nth-child(2)  { --team-a: #681b27; --team-line: #a52b40; --row-accent: #e10600; }
-.directory-teams tbody tr:nth-child(3)  { --team-a: #713716; --team-line: #d87526; --row-accent: #ff8000; }
-.directory-teams tbody tr:nth-child(4)  { --team-a: #07514e; --team-line: #12a69d; --row-accent: #00d2be; }
-.directory-teams tbody tr:nth-child(5)  { --team-a: #10483d; --team-line: #3d9678; --row-accent: #2a9d7f; }
-.directory-teams tbody tr:nth-child(6)  { --team-a: #153d70; --team-line: #4479bb; --row-accent: #3585ff; }
-.directory-teams tbody tr:nth-child(7)  { --team-a: #393c44; --team-line: #9299a5; --row-accent: #aeb5c1; }
-.directory-teams tbody tr:nth-child(8)  { --team-a: #562326; --team-line: #d43b3b; --row-accent: #e1262f; }
-.directory-teams tbody tr:nth-child(9)  { --team-a: #a71920; --team-line: #e02b32; --row-accent: #ed2939; --team-stop: 100%; }
-.directory-teams tbody tr:nth-child(10) { --team-a: #e5bd32; --team-line: #f5ce48; --row-accent: #e5bd32; --team-stop: 100%; }
-.directory-teams tbody tr:nth-child(11) { --team-a: #e85b91; --team-line: #f18bb1; --row-accent: #e85b91; --team-stop: 100%; }
+/* TEAM LOGO COLOURS — assigned by team identity, not row position */
 
+.directory-teams tbody tr[data-team="red-bull-racing"] {
+  --team-a: #1c315c;
+  --team-line: #4165a0;
+  --row-accent: #3671c6;
+}
+
+.directory-teams tbody tr[data-team="mclaren"] {
+  --team-a: #713716;
+  --team-line: #d87526;
+  --row-accent: #ff8000;
+}
+
+.directory-teams tbody tr[data-team="mercedes"] {
+  --team-a: #07514e;
+  --team-line: #12a69d;
+  --row-accent: #00d2be;
+}
+
+.directory-teams tbody tr[data-team="ferrari"] {
+  --team-a: #681b27;
+  --team-line: #a52b40;
+  --row-accent: #e10600;
+}
+
+.directory-teams tbody tr[data-team="aston-martin"] {
+  --team-a: #10483d;
+  --team-line: #3d9678;
+  --row-accent: #2a9d7f;
+}
+
+.directory-teams tbody tr[data-team="williams"] {
+  --team-a: #153d70;
+  --team-line: #4479bb;
+  --row-accent: #3585ff;
+}
+
+.directory-teams tbody tr[data-team="cadillac"] {
+  --team-a: #393c44;
+  --team-line: #9299a5;
+  --row-accent: #aeb5c1;
+}
+
+.directory-teams tbody tr[data-team="haas"] {
+  --team-a: #562326;
+  --team-line: #d43b3b;
+  --row-accent: #e1262f;
+}
+
+.directory-teams tbody tr[data-team="audi"] {
+  --team-a: #a71920;
+  --team-line: #e02b32;
+  --row-accent: #ed2939;
+  --team-stop: 100%;
+}
+
+.directory-teams tbody tr[data-team="racing-bulls"] {
+  --team-a: #e5bd32;
+  --team-line: #f5ce48;
+  --row-accent: #e5bd32;
+  --team-stop: 100%;
+}
+
+.directory-teams tbody tr[data-team="alpine"] {
+  --team-a: #e85b91;
+  --team-line: #f18bb1;
+  --row-accent: #e85b91;
+  --team-stop: 100%;
+}
 .directory-teams tbody tr .team-logo,
 .directory-teams tbody tr .team-logo-fallback {
   background: linear-gradient(135deg, var(--team-a, #202633), #17151d var(--team-stop, 75%));
@@ -551,7 +607,7 @@ tbody tr:hover .row-open { border-color: #4d586d; color: #fff; }
 }
 
 /* Cadillac logo visibility fix (kept from original) */
-.directory-teams tbody tr:nth-child(7) .team-logo {
+.directory-teams tbody tr[data-team="cadillac"] .team-logo {
   background-color: #111827 !important;
   border: 1px solid #d5d9e2 !important;
   padding: 3px;
@@ -1905,5 +1961,517 @@ footer button:hover { color: #fff; border-color: #4b566a; background: #1a202c; }
   .profile-current-driver {
     width: 100px;
     height: 125px;
+  }
+}
+
+
+
+/* =========================================
+   CHAMPIONSHIP HISTORY — F1 HALL OF FAME
+========================================= */
+
+.championship-history {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.championship-history h3 {
+  margin: 0 0 8px;
+  color: #f5f7fb;
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.championship-history .detail-section-description {
+  margin: 0 0 20px;
+  color: #91a2b6;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.detail-empty {
+  color: #8999ad;
+  font-size: 12px;
+}
+
+/* =========================================
+   DRIVERS' CHAMPIONSHIP — WINNERS
+========================================= */
+
+.champion-driver-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.champion-driver-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 132px;
+  padding: 12px 20px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(246, 198, 93, 0.10),
+      transparent 65%
+    ),
+    linear-gradient(145deg, #1a2635, #131d29);
+
+  border: 1px solid rgba(246, 198, 93, 0.2);
+  border-radius: 12px;
+
+  transition: transform 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.champion-driver-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(246, 198, 93, 0.55);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.champion-driver-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  background: linear-gradient(180deg, #ffe49a, #d49a32);
+  border-radius: 0 4px 4px 0;
+}
+
+.champion-driver-card img {
+  align-self: flex-end;
+  width: 88px;
+  height: 108px;
+  object-fit: contain;
+  object-position: bottom;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.25));
+}
+
+.champion-driver-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  min-width: 0;
+}
+
+.champion-driver-info strong {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.champion-driver-info > span {
+  color: #9eafc2;
+  font-size: 11px;
+}
+
+.champion-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.champion-years span {
+  padding: 5px 9px;
+  color: #f5cb70;
+  background: rgba(246, 198, 93, 0.1);
+  border: 1px solid rgba(246, 198, 93, 0.22);
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* =========================================
+   CONSTRUCTORS' CHAMPIONSHIP — SEASON CARDS
+========================================= */
+
+.constructor-winning-seasons {
+  display: grid;
+  gap: 13px;
+}
+
+.constructor-winning-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 135px minmax(0, 1fr) 145px;
+  align-items: center;
+  gap: 16px;
+  min-height: 150px;
+  padding: 14px 19px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(246, 198, 93, 0.055),
+      transparent 65%
+    ),
+    linear-gradient(145deg, #192534, #131d29);
+
+  border: 1px solid rgba(246, 198, 93, 0.18);
+  border-radius: 12px;
+
+  transition: transform 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.constructor-winning-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  bottom: 13px;
+  width: 3px;
+  background: linear-gradient(180deg, #ffe49a, #d49a32);
+  border-radius: 0 4px 4px 0;
+}
+
+.constructor-winning-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(246, 198, 93, 0.48);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Season column */
+
+.constructor-winning-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 9px;
+  height: 100%;
+  margin: 0;
+  padding: 0 13px 0 3px;
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.constructor-winning-heading span {
+  color: #8294aa;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.constructor-winning-heading strong {
+  color: #f5c96c;
+  font-size: 21px;
+  font-weight: 900;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(246, 198, 93, 0.12);
+}
+
+/* Winning drivers */
+
+.constructor-winning-drivers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+}
+
+.constructor-winning-driver {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 118px;
+  padding: 3px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  text-align: center;
+}
+
+.constructor-winning-driver img {
+  width: 100%;
+  max-width: 100px;
+  height: 82px;
+  object-fit: contain;
+  object-position: bottom;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.25));
+  transition: transform 0.25s ease;
+}
+
+.constructor-winning-driver:hover img {
+  transform: translateY(-3px) scale(1.04);
+}
+
+.constructor-winning-driver strong {
+  color: #f5f7fb;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Constructor total */
+
+.constructor-winning-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 9px;
+  height: 100%;
+  min-height: 100px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.constructor-winning-total span {
+  color: #8294aa;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.9px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.constructor-winning-total strong {
+  padding: 9px 12px;
+  color: #f5cb70;
+  background: linear-gradient(
+    135deg,
+    rgba(246, 198, 93, 0.15),
+    rgba(246, 198, 93, 0.06)
+  );
+  border: 1px solid rgba(246, 198, 93, 0.25);
+  border-radius: 7px;
+  font-size: 20px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 850px) {
+  .constructor-winning-card {
+    grid-template-columns: 110px minmax(0, 1fr) 120px;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .constructor-winning-driver img {
+    max-width: 82px;
+    height: 72px;
+  }
+
+  .constructor-winning-driver strong {
+    font-size: 11px;
+  }
+
+  .constructor-winning-heading strong {
+    font-size: 18px;
+  }
+
+  .constructor-winning-total strong {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 650px) {
+  .champion-driver-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .constructor-winning-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .constructor-winning-heading {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 0 0 11px 3px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .constructor-winning-drivers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .constructor-winning-driver {
+    min-height: 105px;
+  }
+
+  .constructor-winning-total {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    min-height: 0;
+    padding: 11px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+  }
+}
+
+@media (max-width: 420px) {
+  .constructor-winning-drivers {
+    grid-template-columns: 1fr;
+  }
+
+  .champion-driver-card img {
+    width: 72px;
+  }
+
+  .constructor-winning-total strong {
+    font-size: 16px;
+  }
+}
+
+/* =========================================
+   CIRCUIT PROFILE — GRAND PRIX WINNERS
+========================================= */
+
+.circuit-history {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.circuit-winner-list {
+  display: grid;
+  gap: 9px;
+}
+
+/* Individual winner row */
+
+.circuit-winner-list .detail-history-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 54px;
+  padding: 10px 18px 10px 15px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(243, 198, 107, 0.07),
+      transparent 45%
+    ),
+    #141e2a;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Gold accent on the left */
+
+.circuit-winner-list .detail-history-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: #f3c66b;
+  border-radius: 0 4px 4px 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+/* Hover effect */
+
+.circuit-winner-list .detail-history-row:hover {
+  transform: translateX(4px);
+  background:
+    linear-gradient(
+      110deg,
+      rgba(243, 198, 107, 0.13),
+      transparent 60%
+    ),
+    #192636;
+
+  border-color: rgba(243, 198, 107, 0.3);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+
+.circuit-winner-list .detail-history-row:hover::before {
+  opacity: 1;
+}
+
+/* Position number */
+
+.circuit-winner-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 32px;
+  padding: 0 8px;
+
+  color: #f3c66b;
+  background: rgba(243, 198, 107, 0.1);
+  border: 1px solid rgba(243, 198, 107, 0.2);
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Winner name */
+
+.circuit-winner-list .detail-history-row b {
+  color: #f5f7fb;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+.circuit-winner-list .detail-history-row:hover b {
+  color: #f3c66b;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .circuit-winner-list .detail-history-row {
+    min-height: 50px;
+    padding: 9px 12px;
+  }
+
+  .circuit-winner-list .detail-history-row b {
+    font-size: 12px;
   }
 }

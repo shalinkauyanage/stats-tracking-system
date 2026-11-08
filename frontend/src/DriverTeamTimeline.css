@@ -1,0 +1,786 @@
+
+/* =========================================================
+   F1 DRIVER TEAM TIMELINE
+   Premium Motorsport Dashboard Design
+========================================================= */
+
+.driver-team-timeline {
+  --timeline-accent: #e5bd62;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 22px;
+  padding: 27px 28px 29px;
+  color: #f4f6fb;
+
+  background:
+    radial-gradient(
+      ellipse at 10% 0%,
+      rgba(229, 189, 98, 0.09),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      rgba(40, 105, 160, 0.09),
+      transparent 45%
+    ),
+    linear-gradient(145deg, #141e2d, #0c1420 65%, #111b29);
+
+  border: 1px solid rgba(145, 165, 194, 0.19);
+  border-radius: 17px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.045);
+}
+
+/* Decorative background */
+
+.driver-team-timeline::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -120px;
+  right: -100px;
+
+  width: 300px;
+  height: 260px;
+
+  background: radial-gradient(
+    circle,
+    var(--timeline-accent),
+    transparent 70%
+  );
+
+  opacity: 0.09;
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.driver-team-timeline::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--timeline-accent),
+    transparent
+  );
+
+  opacity: 0.55;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.driver-team-timeline-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.driver-team-timeline-kicker {
+  display: inline-block;
+
+  color: var(--timeline-accent);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 2.5px;
+}
+
+.driver-team-timeline-heading h3 {
+  margin: 7px 0 5px;
+
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 950;
+  letter-spacing: 0.6px;
+}
+
+.driver-team-timeline-heading p {
+  margin: 0;
+
+  color: #8d9cb1;
+  font-size: 11px;
+  letter-spacing: 0.15px;
+  line-height: 1.6;
+}
+
+.driver-team-timeline-count {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+
+  color: var(--timeline-accent);
+  font-size: 27px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.driver-team-timeline-count small {
+  color: #8493a8;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+}
+
+/* =========================================================
+   TEAM TIMELINE
+========================================================= */
+
+.driver-team-timeline-track {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  overflow-x: auto;
+
+  padding: 13px 8px 17px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #35465e transparent;
+}
+
+/* Team button */
+
+.driver-team-timeline-stop {
+  --team-color: #8996a8;
+  --team-glow: rgba(137, 150, 168, 0.2);
+
+  position: relative;
+
+  display: flex;
+  flex: 0 0 116px;
+  min-width: 116px;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+
+  padding: 0;
+
+  color: inherit;
+  text-align: center;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+  font: inherit;
+
+  transition: transform 0.25s ease;
+}
+
+.driver-team-timeline-stop:hover {
+  transform: translateY(-5px);
+}
+
+/* Team logo container */
+
+.driver-team-timeline-logo {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  width: 91px;
+  height: 77px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      color-mix(in srgb, var(--team-color) 19%, transparent),
+      transparent 75%
+    ),
+    linear-gradient(145deg, #202c3e, #111a28);
+
+  border: 1px solid
+    color-mix(in srgb, var(--team-color) 45%, #344155);
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px rgba(255, 255, 255, 0.09);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Logo hover */
+
+.driver-team-timeline-stop:hover .driver-team-timeline-logo {
+  border-color: var(--team-color);
+
+  box-shadow:
+    0 0 0 1px var(--team-color),
+    0 0 25px var(--team-glow),
+    0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Selected logo */
+
+.driver-team-timeline-stop.is-selected .driver-team-timeline-logo {
+  border-color: var(--team-color);
+
+  background:
+    radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--team-color) 27%, transparent),
+      transparent 80%
+    ),
+    #111a28;
+
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--team-color) 22%, transparent),
+    0 0 27px var(--team-glow),
+    inset 0 0 20px var(--team-glow);
+}
+
+/* Bottom team-coloured accent */
+
+.driver-team-timeline-logo::after {
+  content: "";
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background: var(--team-color);
+
+  box-shadow: 0 0 12px var(--team-color);
+}
+
+/* Logo image */
+
+.driver-team-timeline-logo img {
+  position: relative;
+  z-index: 1;
+
+  display: block;
+
+  width: 68px;
+  height: 51px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
+
+  transition: transform 0.25s ease;
+}
+
+.driver-team-timeline-stop:hover .driver-team-timeline-logo img {
+  transform: scale(1.09);
+}
+
+/* Team numbering */
+
+.driver-team-timeline-index {
+  position: absolute;
+  z-index: 2;
+
+  top: 7px;
+  left: 9px;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 0.7px;
+}
+
+/* Fallback logo */
+
+.driver-team-timeline-fallback {
+  display: none;
+
+  color: #f2f5fa;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.driver-team-timeline-logo.logo-fallback .driver-team-timeline-fallback {
+  display: block;
+}
+
+/* Ambient glow */
+
+.driver-team-timeline-glow {
+  position: absolute;
+
+  right: -22px;
+  bottom: -35px;
+
+  width: 75px;
+  height: 75px;
+
+  background: var(--team-color);
+  border-radius: 50%;
+
+  opacity: 0.16;
+  filter: blur(19px);
+}
+
+/* Team name */
+
+.driver-team-timeline-team-name {
+  max-width: 116px;
+
+  color: #dce5f1;
+
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.4;
+
+  transition: color 0.2s ease;
+}
+
+.driver-team-timeline-stop:hover .driver-team-timeline-team-name,
+.driver-team-timeline-stop.is-selected .driver-team-timeline-team-name {
+  color: #ffffff;
+}
+
+/* Latest team indicator */
+
+.driver-team-timeline-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 5px 9px;
+
+  color: #c9fbe3;
+
+  background: rgba(36, 190, 119, 0.10);
+  border: 1px solid rgba(36, 190, 119, 0.27);
+  border-radius: 30px;
+
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: 0.9px;
+}
+
+.driver-team-timeline-current i {
+  width: 6px;
+  height: 6px;
+
+  background: #35d28b;
+  border-radius: 50%;
+
+  box-shadow: 0 0 9px #35d28b;
+}
+
+/* =========================================================
+   CONNECTING LINE
+========================================================= */
+
+.driver-team-timeline-connector {
+  position: relative;
+
+  display: flex;
+  flex: 1 1 40px;
+  min-width: 35px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 5px 28px;
+}
+
+.driver-team-timeline-line {
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    var(--timeline-accent),
+    #47566b 90%
+  );
+
+  opacity: 0.75;
+}
+
+.driver-team-timeline-arrow {
+  position: absolute;
+
+  right: -2px;
+  top: -12px;
+
+  color: #d2dbea;
+
+  font-size: 22px;
+  font-weight: 300;
+}
+
+/* =========================================================
+   SELECTED TEAM STATISTICS PANEL
+========================================================= */
+
+.driver-team-selected-panel {
+  --team-color: #d7b45d;
+  --team-glow: rgba(215, 180, 93, 0.1);
+
+  position: relative;
+
+  margin-top: 23px;
+  padding: 21px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      var(--team-glow),
+      transparent 55%
+    ),
+    linear-gradient(135deg, #182435, #101925 75%);
+
+  border: 1px solid
+    color-mix(in srgb, var(--team-color) 40%, #344155);
+
+  border-left: 3px solid var(--team-color);
+  border-radius: 13px;
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.2),
+    inset 0 1px rgba(255, 255, 255, 0.045);
+
+  animation: teamPanelEnter 0.3s ease both;
+}
+
+/* Subtle panel entrance */
+
+@keyframes teamPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Panel heading */
+
+.driver-team-selected-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  margin-bottom: 19px;
+}
+
+.driver-team-selected-eyebrow {
+  color: #9cacc1;
+
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1.8px;
+}
+
+.driver-team-selected-heading h4 {
+  margin: 6px 0 0;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.driver-team-selected-hint {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 10px;
+
+  color: var(--team-color);
+
+  background: var(--team-glow);
+  border: 1px solid
+    color-mix(in srgb, var(--team-color) 35%, transparent);
+
+  border-radius: 5px;
+
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 1px;
+}
+
+/* Statistics grid */
+
+.driver-team-stat-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+/* Individual statistic cards */
+
+.driver-team-stat-card {
+  position: relative;
+
+  display: flex;
+  min-height: 91px;
+
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 10px;
+  padding: 15px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    rgba(30, 43, 61, 0.9),
+    rgba(12, 20, 31, 0.85)
+  );
+
+  border: 1px solid rgba(157, 177, 205, 0.12);
+  border-radius: 10px;
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+.driver-team-stat-card::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 25px;
+  height: 2px;
+
+  background: var(--team-color);
+
+  opacity: 0.8;
+}
+
+.driver-team-stat-card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    color-mix(in srgb, var(--team-color) 42%, transparent);
+
+  background: rgba(31, 45, 64, 0.95);
+}
+
+.driver-team-stat-card strong {
+  color: #ffffff;
+
+  font-size: 31px;
+  font-weight: 950;
+  line-height: 1;
+
+  letter-spacing: -0.8px;
+}
+
+.driver-team-stat-card span {
+  color: #9eacc0;
+
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.15px;
+}
+
+/* Missing data note */
+
+.driver-team-stats-note {
+  margin: 13px 0 0;
+
+  color: #8492a5;
+  font-size: 10px;
+}
+
+.driver-team-stats-note code {
+  color: #e4c77f;
+}
+
+/* =========================================================
+   TEAM BRAND COLOURS
+========================================================= */
+
+.driver-team-timeline-stop.team-ferrari,
+.driver-team-selected-panel.team-ferrari {
+  --team-color: #f0443e;
+  --team-glow: rgba(240, 68, 62, 0.17);
+}
+
+.driver-team-timeline-stop.team-mercedes,
+.driver-team-selected-panel.team-mercedes {
+  --team-color: #00d2be;
+  --team-glow: rgba(0, 210, 190, 0.17);
+}
+
+.driver-team-timeline-stop.team-red-bull-racing,
+.driver-team-selected-panel.team-red-bull-racing {
+  --team-color: #3678df;
+  --team-glow: rgba(54, 120, 223, 0.19);
+}
+
+.driver-team-timeline-stop.team-racing-bulls,
+.driver-team-selected-panel.team-racing-bulls {
+  --team-color: #78b9e8;
+  --team-glow: rgba(120, 185, 232, 0.18);
+}
+
+.driver-team-timeline-stop.team-mclaren,
+.driver-team-selected-panel.team-mclaren {
+  --team-color: #ff8700;
+  --team-glow: rgba(255, 135, 0, 0.17);
+}
+
+.driver-team-timeline-stop.team-aston-martin,
+.driver-team-selected-panel.team-aston-martin {
+  --team-color: #087b62;
+  --team-glow: rgba(8, 123, 98, 0.2);
+}
+
+.driver-team-timeline-stop.team-williams,
+.driver-team-selected-panel.team-williams {
+  --team-color: #2879e6;
+  --team-glow: rgba(40, 121, 230, 0.18);
+}
+
+.driver-team-timeline-stop.team-alpine,
+.driver-team-selected-panel.team-alpine {
+  --team-color: #e85b9e;
+  --team-glow: rgba(232, 91, 158, 0.18);
+}
+
+.driver-team-timeline-stop.team-haas,
+.driver-team-selected-panel.team-haas {
+  --team-color: #d7dce4;
+  --team-glow: rgba(215, 220, 228, 0.13);
+}
+
+.driver-team-timeline-stop.team-audi,
+.driver-team-selected-panel.team-audi {
+  --team-color: #e33b36;
+  --team-glow: rgba(227, 59, 54, 0.18);
+}
+
+.driver-team-timeline-stop.team-cadillac,
+.driver-team-selected-panel.team-cadillac {
+  --team-color: #c4a56b;
+  --team-glow: rgba(196, 165, 107, 0.18);
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.driver-team-timeline-stop:focus-visible {
+  outline: 2px solid var(--team-color);
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 700px) {
+  .driver-team-timeline {
+    padding: 21px 17px 23px;
+  }
+
+  .driver-team-timeline-heading h3 {
+    font-size: 16px;
+  }
+
+  .driver-team-timeline-stop {
+    flex-basis: 100px;
+    min-width: 100px;
+  }
+
+  .driver-team-timeline-logo {
+    width: 81px;
+    height: 69px;
+  }
+
+  .driver-team-timeline-logo img {
+    width: 60px;
+    height: 44px;
+  }
+
+  .driver-team-stat-grid {
+    gap: 8px;
+  }
+
+  .driver-team-stat-card {
+    min-height: 80px;
+    padding: 11px;
+  }
+
+  .driver-team-stat-card strong {
+    font-size: 25px;
+  }
+
+  .driver-team-stat-card span {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 420px) {
+  .driver-team-timeline {
+    padding: 18px 13px;
+  }
+
+  .driver-team-timeline-count {
+    font-size: 22px;
+  }
+
+  .driver-team-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .driver-team-stat-card {
+    min-height: 69px;
+  }
+
+  .driver-team-selected-panel {
+    padding: 15px;
+  }
+}
+
+/* Respect reduced motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .driver-team-timeline *,
+  .driver-team-timeline *::before,
+  .driver-team-timeline *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
