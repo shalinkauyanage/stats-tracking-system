@@ -1,4 +1,4 @@
-# F1  — Stage 2
+# F1  — Stage 1
 
 A personal Formula 1 career with historical career statistics, season-management logic, a Hall of Fame, and a safe Excel import system.
 
