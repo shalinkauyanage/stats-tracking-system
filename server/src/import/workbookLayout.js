@@ -23,7 +23,7 @@ const DRIVER_COLUMNS = {
   third_places: ['3rd', 'thirdplaces', 'p3'],
   podiums: ['podiums', 'podium'],
   poles: ['pole', 'poles', 'polepositions'],
-  p1_fl_gp: ['p1+fl+gp'],
+  p1_fl_gp: ['gpstarts', 'gpstart', 'gp starts', 'p1+fl+gp', 'p1 fl gp'],
   fastest_laps: ['fatestlap', 'fastestlap', 'fastestlaps', 'fl'],
   dnfs: ['dnf', 'dnfs'],
   mps: ['mps'],

@@ -52,28 +52,55 @@ export function buildLegacyDataset(snapshot, { blankPolicy = 'zero' } = {}) {
   const drivers = [];
   const driverByKey = new Map();
   const driverTeamInName = new Map();
+  
   for (const row of snapshot.driver_stats.rows) {
-    const { driver, team } = splitDriverAndTeam(row.name_raw, teamNames);
+    const parsed = splitDriverAndTeam(row.name_raw, teamNames);
+    const driver = parsed.driver;
+
+    // Treat NoTeam as an explicit indication that no team is assigned.
+    const hasNoTeamPlaceholder =
+      parsed.team && nameKey(parsed.team) === 'noteam';
+
+    const team = hasNoTeamPlaceholder ? null : parsed.team;
+
     const key = nameKey(driver);
+
     if (!key) {
-      addIssue('error', 'blank_driver_name', 'A driver row has no name.', { row: row.row });
+      addIssue('error', 'blank_driver_name',
+        'A driver row has no name.', { row: row.row });
       continue;
     }
+
     if (driverByKey.has(key)) {
-      addIssue('error', 'duplicate_driver', `Driver "${driver}" appears more than once.`, { row: row.row });
+      addIssue('error', 'duplicate_driver',
+        `Driver "${driver}" appears more than once.`,
+        { row: row.row });
       continue;
     }
-    if (!team) {
+
+    // Only validate actual team names.
+    if (!team && !hasNoTeamPlaceholder) {
       addIssue('warning', 'driver_team_not_found_in_name',
-        `Could not find a team next to "${driver}" in the name cell.`, { row: row.row });
-    } else if (!teamByKey.has(nameKey(team))) {
-      addIssue('error', 'unknown_team_in_name', `Team "${team}" next to ${driver} is not in Team Stats.`, { row: row.row });
+        `Could not find a team next to "${driver}" in the name cell.`,
+        { row: row.row });
+    } else if (team && !teamByKey.has(nameKey(team))) {
+      addIssue('error', 'unknown_team_in_name',
+        `Team "${team}" next to ${driver} is not in Team Stats.`,
+        { row: row.row });
     }
-    const d = { key, display_name: driver, name_original: row.name_raw, source_row: row.row };
+
+    const d = {
+      key,
+      display_name: driver,
+      name_original: row.name_raw,
+      source_row: row.row
+    };
+
     drivers.push(d);
     driverByKey.set(key, d);
     driverTeamInName.set(key, team ? nameKey(team) : null);
   }
+
 
   // ------------------------------------------------------------ legacy totals (+ blanks)
   let blanksDriver = 0;

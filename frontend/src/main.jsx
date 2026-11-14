@@ -5,6 +5,7 @@ import driverTeams from './data/driverTeams.js';
 import { GB, BH, CN, SA, AE, AU, JP, US, IT, MC, ES, CA, AT, BE, HU, NL, AZ, SG, MX, BR, QA, FR, DE, PT, TR } from 'country-flag-icons/react/3x2';
 import { seasonArchive } from './data/seasonArchive.js';
 import { allTimeRecords } from './data/allTimeRecords.js';
+import driverTeamHistory from './data/driverTeamHistory.js';
 import './styles.css';
 import DriverTeamTimeline from './DriverTeamTimeline';
 import driversBanner from './assets/banners/drivers-banner.png';
@@ -263,39 +264,138 @@ if (page === 'Teams') {
     );
   });
 }
+if (page === 'Circuits') {
+  const circuitOrder = [
+    'Monaco',
+    'United Kingdom',
+    'Italy',
+    'United Arab Emirates',
+    'Brazil',
+    'Japan',
+    'Singapore',
+    'Canada',
+    'Australia',
+    'Belgium',
+    'Austria',
+    'United States',
+    'Azerbaijan',
+    'Mexico',
+    'Emilia-Romagna',
+    'China',
+    'Netherlands',
+    'Spain',
+    'Hungary',
+    'Miami',
+    'Qatar',
+    'Saudi Arabia',
+    'Bahrain',
+    'Las Vegas',
+    'Portugal',
+    'Turkey',
+    'Germany',
+    'Tuscany',
+    'France'
+  ];
+
+  return rows.sort((a, b) => {
+    const getRank = name => {
+      const index = circuitOrder.findIndex(country =>
+        String(name || '').toLowerCase().trim() === country.toLowerCase()
+      );
+
+      return index === -1 ? 999 : index;
+    };
+
+    return getRank(a.gp_name) - getRank(b.gp_name);
+  });
+}
     return rows;
   }, [list, search, page]);
-  const getDatabaseRecord = (items, category, title, field, unit, detail) => {
+  
+const getDatabaseRecord = (items, category, title, field, unit, detail) => {
+  const fields = Array.isArray(field) ? field : [field];
+
   const ranked = items
-    .map(item => ({
-      name: item.display_name || item.name,
-      value: Number(item.legacy_totals?.[field] ?? 0),
-    }))
-    .filter(item => Number.isFinite(item.value));
+    .map(item => {
+      const rawValue = fields
+        .map(key => item.legacy_totals?.[key] ?? item[key])
+        .find(value => value !== undefined && value !== null && value !== '');
+
+      return {
+        name: item.display_name || item.name,
+        value: rawValue === undefined ? null : Number(rawValue),
+        item,
+      };
+    })
+    .filter(item =>
+      item.name &&
+      item.value !== null &&
+      Number.isFinite(item.value)
+    );
 
   if (!ranked.length) return null;
 
   const highest = Math.max(...ranked.map(item => item.value));
 
-  const leaders = ranked
-    .filter(item => item.value === highest)
-    .map(item => item.name);
+  const leaders = ranked.filter(item => item.value === highest);
 
   return {
-  category,
-  title,
-  holder: leaders.join(' & '),
-  value: highest.toLocaleString('en-US'),
-  unit,
-  detail,
-  image: imageFor(
-    items.find(item =>
-      (item.display_name || item.name) === leaders[0]
-    ),
-    category === 'DRIVER RECORDS' ? 'Drivers' : 'Teams'
+    category,
+    title,
+    holder: leaders.map(item => item.name).join(' & '),
+    value: highest.toLocaleString('en-US'),
+    unit,
+    detail,
+    image: imageFor(
+      leaders[0].item,
+      category === 'DRIVER RECORDS' ? 'Drivers' : 'Teams'
     ),
   };
 };
+
+
+// MOST RACE WINS WITH A SINGLE TEAM
+const getMostWinsWithSingleTeam = () => {
+  const results = [];
+
+  Object.entries(driverTeamHistory).forEach(([driverName, driverData]) => {
+    Object.entries(driverData.stats || {}).forEach(([teamName, stats]) => {
+      if (typeof stats.gpWins === 'number') {
+        results.push({
+          driverName,
+          teamName,
+          wins: stats.gpWins,
+        });
+      }
+    });
+  });
+
+  if (!results.length) return null;
+
+  const highest = Math.max(...results.map(item => item.wins));
+  const leaders = results.filter(item => item.wins === highest);
+
+  const driver = data.drivers.find(item =>
+    leaders.some(leader =>
+      (item.display_name || item.name) === leader.driverName
+    )
+  );
+
+  return {
+    category: 'DRIVER RECORDS',
+    title: 'Most Race Wins with a Single Team',
+    holder: leaders.map(item =>
+      `${item.driverName} (${item.teamName})`
+    ).join(' & '),
+    value: highest.toLocaleString('en-US'),
+    unit: 'Race victories with one team',
+    detail: 'The driver with the most Grand Prix wins for  a single team.',
+    image: driver ? imageFor(driver, 'Drivers') : null,
+  };
+};
+
+
+// DATABASE RECORDS
 const databaseRecords = [
   // DRIVER RECORDS
   getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most World Championships', 'drivers_titles', 'World championships', 'The highest number of Driver World Championships.'),
@@ -304,13 +404,27 @@ const databaseRecords = [
   getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Podiums', 'podiums', 'Podium finishes', 'The highest number of career podium finishes.'),
   getDatabaseRecord(data.drivers, 'DRIVER RECORDS', 'Most Pole Positions', 'poles', 'Pole positions', 'The highest number of career pole positions.'),
 
+  // NEW DRIVER RECORDS
+  getDatabaseRecord(
+  data.drivers,
+  'DRIVER RECORDS',
+  'Most Grand Prix Starts',
+  ['gp_starts', 'gpStarts', 'grand_prix_starts', 'p1_fl_gp'],
+  'Grand Prix starts',
+  'The highest number of Grand Prix starts recorded by a driver.'
+),
+  getMostWinsWithSingleTeam(),
+
   // CONSTRUCTOR RECORDS
   getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Constructor Championships', 'constructors_titles', 'Championships', 'The highest number of Constructor Championships.'),
-  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Race Wins', 'wins', 'Race victories', 'The highest number of race victories recorded by a constructor.'),
+  getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Race Wins', 'wins', 'Race victories', 'The most race victories recorded by a constructor.'),
   getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Career Points', 'points', 'Championship points', 'The highest career points total recorded by a constructor.'),
   getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Podiums', 'podiums', 'Podium finishes', 'The highest number of podium finishes recorded by a constructor.'),
   getDatabaseRecord(data.teams, 'CONSTRUCTOR RECORDS', 'Most Pole Positions', 'poles', 'Pole positions', 'The highest number of pole positions recorded by a constructor.'),
 ].filter(Boolean);
+
+
+// RECORDS OF A LIFETIME
 const featuredRecords = [
   databaseRecords.find(r =>
     r.category === 'DRIVER RECORDS' &&
@@ -328,7 +442,16 @@ const featuredRecords = [
     r.category === 'CONSTRUCTOR RECORDS' &&
     r.title === 'Most Race Wins'
   ),
+  databaseRecords.find(r =>
+    r.category === 'DRIVER RECORDS' &&
+    r.title === 'Most Grand Prix Starts'
+  ),
+  databaseRecords.find(r =>
+    r.category === 'DRIVER RECORDS' &&
+    r.title === 'Most Race Wins with a Single Team'
+  ),
 ].filter(Boolean);
+
 
 const databaseRecordTitles = [
   'Most World Championships',
@@ -339,6 +462,7 @@ const databaseRecordTitles = [
   'Most Pole Positions',
 ];
 
+
 const remainingRecords = [
   // DRIVER RECORDS
   ...[
@@ -348,6 +472,7 @@ const remainingRecords = [
     'Most Points in a Single Season',
     'Most Wins in a Single Season',
     'Most Consecutive Race Wins',
+    'Race Wins in Every Track',
   ].map(title =>
     databaseRecords.find(r =>
       r.category === 'DRIVER RECORDS' && r.title === title
@@ -363,6 +488,8 @@ const remainingRecords = [
     'Most Podiums',
     'Most Pole Positions',
     'Most Points in a Single Season',
+    'Most Driver Championships',
+    'Most Consecutive Titles',
   ].map(title =>
     databaseRecords.find(r =>
       r.category === 'CONSTRUCTOR RECORDS' && r.title === title
@@ -372,6 +499,7 @@ const remainingRecords = [
     )
   ).filter(Boolean),
 ];
+
   const stats = [
     { label: 'Drivers archived', value: data.drivers.length, icon: Users, tone: 'red', note: 'Driverrecords' },
     { label: 'Teams archived', value: data.teams.length, icon: ShieldCheck, tone: 'blue', note: 'Constructor records' },
@@ -845,15 +973,65 @@ el.style.display = 'none';
                   {String(index + 1).padStart(2, '0')}
                 </div>
 
-                <div className="records-list-main">
-                  <span>{record.category}</span>
-                  <h4>{record.title}</h4>
-                  <p>{record.detail}</p>
-                </div>
+                
+<div className="records-list-main">
+  <h4>{record.title}</h4>
+  <p>{record.detail}</p>
+</div>
 
-                <div className="records-list-holder">
-                  {record.holder}
-                </div>
+
+
+<div className="records-list-holder">
+  <div className="records-holder-images">
+    {record.holder.split(' & ').map((holderName, index) => {
+      // Use the manual imageType when available.
+      // Otherwise, determine it from the record category.
+      const imageType =
+        record.imageType ||
+        (record.category === 'DRIVER RECORDS'
+          ? 'Drivers'
+          : 'Teams');
+
+      const collection =
+        imageType === 'Drivers' ? data.drivers : data.teams;
+
+      const item = collection?.find(entry => {
+        const name =
+          imageType === 'Drivers'
+            ? (entry.display_name || entry.name)
+            : entry.name;
+
+        return name?.trim().toLowerCase() ===
+          holderName.trim().toLowerCase();
+      });
+
+      // Prefer the matched person's/team's image.
+      // Fall back to the image already generated by getDatabaseRecord.
+      const holderImage = item
+        ? imageFor(item, imageType)
+        : index === 0
+          ? record.image
+          : null;
+
+      return holderImage ? (
+        <img
+          key={`${holderName}-${index}`}
+          className="records-holder-image"
+          src={holderImage}
+          alt={holderName}
+          title={holderName}
+          onError={e => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      ) : null;
+    })}
+  </div>
+
+  <strong>{record.holder}</strong>
+</div>
+
+
 
                 <div className="records-list-stat">
                   <strong>{record.value}</strong>
@@ -884,77 +1062,167 @@ el.style.display = 'none';
 {selected && (
   <div className="modal-backdrop" onClick={() => setSelected(null)}>
     <section
-  className={`detail-modal detail-modal-${selected.kind.toLowerCase()} ${selected.kind === 'Circuits' ? 'circuit-profile' : ''}`}
-  data-country={
-  selected.kind === 'Circuits'
-    ? getCircuitCountry(selected.item.gp_name || selected.item.name || selected.label || '')
-    : undefined
-}
-  onClick={e => e.stopPropagation()}
->
+      className={`detail-modal detail-modal-${selected.kind.toLowerCase()} ${
+        selected.kind === 'Circuits' ? 'circuit-profile' : ''
+      }`}
+      data-country={
+        selected.kind === 'Circuits'
+          ? getCircuitCountry(
+              selected.item.gp_name ||
+              selected.item.name ||
+              selected.label ||
+              ''
+            )
+          : undefined
+      }
+      onClick={e => e.stopPropagation()}
+    >
       <button className="modal-close" onClick={() => setSelected(null)}>
         <X size={18} />
       </button>
 
       {(() => {
         const profileImage = imageFor(selected.item, selected.kind);
+
         const teamColor = selected.kind === 'Teams'
           ? teamLogoSlug(selected.item.name)
           : 'racing';
-          const currentTeamDrivers = selected.kind === 'Teams'
-  ? data.drivers.filter(d =>
-      driverTeam(d).toLowerCase() === selected.item.name.toLowerCase()
-    ).slice(0, 2)
-  : [];
+
+        const currentTeamDrivers = selected.kind === 'Teams'
+          ? data.drivers.filter(d =>
+              driverTeam(d).toLowerCase() ===
+              selected.item.name.toLowerCase()
+            ).slice(0, 2)
+          : [];
+
+        const driverTotals = selected.item.legacy_totals || {};
+
+        const driverTitles = Number(
+          driverTotals.drivers_titles ??
+          driverTotals.world_titles ??
+          driverTotals.titles ??
+          0
+        );
 
         return (
           <>
             <div
-  className={`profile-banner profile-banner-${
-    selected.kind === 'Drivers'
-      ? (driverTeams[selected.label] || 'default').toLowerCase().replace(/\s+/g, '-')
-      : teamColor
-  }`}
->
+              className={`profile-banner profile-banner-${
+                selected.kind === 'Drivers'
+                  ? (driverTeams[selected.label] || 'default')
+                      .toLowerCase()
+                      .replace(/\s+/g, '-')
+                  : teamColor
+              }`}
+            >
               {profileImage && (
                 <img
-                  className={`profile-image ${selected.kind === 'Teams' ? 'profile-team-logo' : 'profile-driver-photo'}`}
+                  className={`profile-image ${
+                    selected.kind === 'Teams'
+                      ? 'profile-team-logo'
+                      : 'profile-driver-photo'
+                  }`}
                   src={profileImage}
                   alt={selected.label}
-                  onError={e => { e.currentTarget.style.visibility = 'hidden'; }}
+                  onError={e => {
+                    e.currentTarget.style.visibility = 'hidden';
+                  }}
                 />
               )}
-              <div className="profile-heading">
-                
-                <h2>{selected.label || 'Record details'}</h2>
-                <p className="modal-subtitle">
-                  {selected.kind === 'Drivers'
-                    ? 'Driver Career'
-                    : selected.kind === 'Teams'
-                    ? 'Constructor Record'
-                    : 'Circuit Record'}
-                </p>
-              </div>
-              {selected.kind === 'Teams' && currentTeamDrivers.length > 0 && (
-  <div className="profile-current-drivers">
-    {currentTeamDrivers.map(driver => {
-      const driverName = driver.display_name || driver.name;
 
-      return (
-        <div className="profile-current-driver" key={driver.id}>
-          <img
-            src={imageFor(driver, 'Drivers')}
-            alt={driverName}
-            title={driverName}
-            onError={e => {
-              e.currentTarget.style.visibility = 'hidden';
-            }}
-          />
-        </div>
-      );
-    })}
-  </div>
-)}
+              <div className="profile-heading">
+                <div>
+                  <h2>{selected.label || 'Record details'}</h2>
+
+                  <p className="modal-subtitle">
+                    {selected.kind === 'Drivers'
+                      ? 'Driver Career'
+                      : selected.kind === 'Teams'
+                      ? 'Constructor Record'
+                      : 'Circuit Record'}
+                  </p>
+                </div>
+
+                {selected.kind === 'Drivers' && driverTitles > 0 && (
+                  <div
+                    className="profile-driver-championships"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginLeft: 'auto',
+                      flexShrink: 0,
+                      gap: '4px'
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px'
+                      }}
+                    >
+                      {Array.from(
+                        { length: driverTitles },
+                        (_, index) => (
+                          <img
+                            key={index}
+                            src="/images/trophies/WDC.png"
+                            alt="World Championship trophy"
+                            style={{
+                              width: '27px',
+                              height: '42px',
+                              objectFit: 'contain'
+                            }}
+                          />
+                        )
+                      )}
+                    </div>
+
+                    <span
+                      style={{
+                        color: '#F2C45F',
+                        fontSize: '10px',
+                        fontWeight: '900',
+                        letterSpacing: '1px',
+                        textAlign: 'center',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {driverTitles === 1
+                        ? 'WORLD CHAMPION'
+                        : `${driverTitles}-TIME WORLD CHAMPION`}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {selected.kind === 'Teams' &&
+                currentTeamDrivers.length > 0 && (
+                  <div className="profile-current-drivers">
+                    {currentTeamDrivers.map(driver => {
+                      const driverName =
+                        driver.display_name || driver.name;
+
+                      return (
+                        <div
+                          className="profile-current-driver"
+                          key={driver.id}
+                        >
+                          <img
+                            src={imageFor(driver, 'Drivers')}
+                            alt={driverName}
+                            title={driverName}
+                            onError={e => {
+                              e.currentTarget.style.visibility = 'hidden';
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
             </div>
 
             {detailLoading ? (
@@ -974,11 +1242,11 @@ el.style.display = 'none';
           </>
         );
       })()}
-    </section>
-  </div>
-)}
+          </section>
+    </div>
+  )}
 
-  </div>;
+  </div>
 }
 function EmptyPage({title,description,icon:Icon,count,loading}) { return <section className="panel empty-page"><div className="empty-icon large"><Icon size={28}/></div><span className="section-kicker">COMING FROM YOUR DATA</span><h2>{title}</h2><p>{description}</p><div className="empty-state-chip">{loading?'CHECKING ARCHIVE':`${count} RECORDS FOUND`}</div></section>; }
 function RecordPanel({ title, icon: Icon, rows, loading, empty }) {
@@ -1145,7 +1413,7 @@ function DetailContent({ data, kind }) {
           .slice(0, 6)
           .map(([k, v]) => (
             <div key={k}>
-              <small>{k.replaceAll('_', ' ')}</small>
+              <small>{k === 'p1_fl_gp' ? 'GP Starts' : k.replaceAll('_', ' ')}</small>
               <strong>
                 {typeof v === 'number' ? fmt(v) : v}
               </strong>
@@ -1214,17 +1482,23 @@ function DetailContent({ data, kind }) {
                       }}
                     />
 
-                    <div className="champion-driver-info">
-                      <strong>{driver.driver_name}</strong>
+                   <div className="champion-driver-info">
+  <strong>{driver.driver_name}</strong>
 
-                      <span>World Champion</span>
+  <span>World Champion</span>
 
-                      <div className="champion-years">
-                        {driver.years.map(year => (
-                          <span key={year}>{year}</span>
-                        ))}
-                      </div>
-                    </div>
+  <div className="champion-years">
+    {driver.years.map(year => (
+      <div className="champion-year-award" key={year}>
+        <img
+          src="/images/trophies/WDC.png"
+          alt="Drivers' World Championship trophy"
+        />
+        <span>{year}</span>
+      </div>
+    ))}
+  </div>
+</div>
                   </div>
                 ))}
               </div>
@@ -1253,46 +1527,53 @@ function DetailContent({ data, kind }) {
             <strong>{season.year}</strong>
           </div>
 
-          {/* WINNING DRIVERS */}
-          <div className="constructor-winning-drivers">
-            {season.drivers.map(driver => (
-              <div
-                className="constructor-winning-driver"
-                key={driver.driver_id}
-              >
-                <img
-                  src={championshipDriverImage(
-                    driver.driver_name,
-                    season.team_name
-                  )}
-                  alt={driver.driver_name}
-                  onError={e => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = imageFor(
-                      { display_name: driver.driver_name },
-                      'Drivers'
-                    );
-                  }}
-                />
+       {/* WINNING DRIVERS */}
+<div className="constructor-winning-drivers">
+  {season.drivers.map((driver, index) => (
+    <React.Fragment key={driver.driver_id}>
+      <div className="constructor-winning-driver">
+        <img
+          src={championshipDriverImage(
+            driver.driver_name,
+            season.team_name
+          )}
+          alt={driver.driver_name}
+          onError={e => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = imageFor(
+              { display_name: driver.driver_name },
+              'Drivers'
+            );
+          }}
+        />
 
-                <strong>{driver.driver_name}</strong>
-              </div>
-            ))}
-          </div>
+        <strong>{driver.driver_name}</strong>
+      </div>
 
-          {/* CONSTRUCTOR TOTAL POINTS — RIGHT SIDE */}
-          <div className="constructor-winning-total">
-            <span>CONSTRUCTOR TOTAL</span>
-            <strong>
-              {season.constructorPoints != null
-                ? `${fmt(season.constructorPoints)} PTS`
-                : '—'}
-            </strong>
-          </div>
+      {index === 0 && (
+        <div className="constructor-trophy">
+          <img
+            src="/images/trophies/WCC.png"
+            alt="Constructors' World Championship trophy"
+          />
         </div>
-      ))}
-    </div>
-  )}
+      )}
+    </React.Fragment>
+  ))}
+</div>
+{/* CONSTRUCTOR TOTAL POINTS — RIGHT SIDE */}
+<div className="constructor-winning-total">
+  <span>CONSTRUCTOR TOTAL</span>
+  <strong>
+    {season.constructorPoints != null
+      ? `${fmt(season.constructorPoints)} PTS`
+      : '—'}
+  </strong>
+</div>
+</div>
+))}
+</div>
+)}
 </div>
 </>
 )}

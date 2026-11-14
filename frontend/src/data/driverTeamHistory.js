@@ -64,12 +64,13 @@ const driverTeamHistory = {
   },
 
   "Fernando Alonso": {
-    teams: ["Aston Martin", "McLaren"],
-    stats: {
-      "Aston Martin": { driverTitles: 0, gpWins: 3, years: 4 },
-      "McLaren": { driverTitles: 0, gpWins: 1, years: 1 },
-    },
+  teams: ["BMW", "Aston Martin", "McLaren"],
+  stats: {
+    "BMW": {driverTitles: 0,gpWins: 0,years: 0},
+    "Aston Martin": {driverTitles: 0,gpWins: 3,years: 4},
+    "McLaren": {driverTitles: 0,gpWins: 1,years: 1}
   },
+},
 
   "Oliver Bearman": {
     teams: ["Haas", "Aston Martin"],

@@ -83,7 +83,7 @@
 
 .driver-team-timeline-heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 
   gap: 18px;
@@ -362,10 +362,16 @@
 
 /* Latest team indicator */
 
+/* Latest team indicator */
+
 .driver-team-timeline-current {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  align-self: center;
+
   gap: 6px;
+  margin-top: 0;
 
   padding: 5px 9px;
 
@@ -378,9 +384,14 @@
   font-size: 7px;
   font-weight: 950;
   letter-spacing: 0.9px;
+  line-height: 1;
+
+  white-space: nowrap;
 }
 
 .driver-team-timeline-current i {
+  flex-shrink: 0;
+
   width: 6px;
   height: 6px;
 
@@ -394,6 +405,10 @@
    CONNECTING LINE
 ========================================================= */
 
+/* =========================================================
+   CONNECTING LINE - FIXED ALIGNMENT
+========================================================= */
+
 .driver-team-timeline-connector {
   position: relative;
 
@@ -404,7 +419,9 @@
   align-items: center;
   justify-content: center;
 
-  margin: 0 5px 28px;
+  /* Align connector with the centre of team logos */
+  align-self: flex-start;
+  margin: 37px 5px 0;
 }
 
 .driver-team-timeline-line {
@@ -423,13 +440,22 @@
 .driver-team-timeline-arrow {
   position: absolute;
 
-  right: -2px;
-  top: -12px;
+  /* Centre arrow between team cards */
+  left: 50%;
+  top: 50%;
+
+  right: auto;
+
+  transform: translate(-50%, -50%);
 
   color: #d2dbea;
+  background: #111a28;
+
+  padding: 0 5px;
 
   font-size: 22px;
   font-weight: 300;
+  line-height: 1;
 }
 
 /* =========================================================
@@ -695,6 +721,47 @@
   --team-color: #c4a56b;
   --team-glow: rgba(196, 165, 107, 0.18);
 }
+/* BMW */
+.driver-team-timeline-stop.team-bmw,
+.driver-team-selected-panel.team-bmw {
+  --team-color: #2879c7;
+  --team-glow: rgba(40, 121, 199, 0.20);
+}
+
+/* Honda */
+.driver-team-timeline-stop.team-honda,
+.driver-team-selected-panel.team-honda {
+  --team-color: #e52532;
+  --team-glow: rgba(229, 37, 50, 0.19);
+}
+
+/* Jaguar */
+.driver-team-timeline-stop.team-jaguar,
+.driver-team-selected-panel.team-jaguar {
+  --team-color: #087b55;
+  --team-glow: rgba(8, 123, 85, 0.20);
+}
+
+/* Lamborghini */
+.driver-team-timeline-stop.team-lamborghini,
+.driver-team-selected-panel.team-lamborghini {
+  --team-color: #d6a928;
+  --team-glow: rgba(214, 169, 40, 0.20);
+}
+
+/* Porsche */
+.driver-team-timeline-stop.team-porsche,
+.driver-team-selected-panel.team-porsche {
+  --team-color: #d52b35;
+  --team-glow: rgba(213, 43, 53, 0.19);
+}
+
+/* Toyota */
+.driver-team-timeline-stop.team-toyota,
+.driver-team-selected-panel.team-toyota {
+  --team-color: #eb3038;
+  --team-glow: rgba(235, 48, 56, 0.19);
+}
 
 /* =========================================================
    ACCESSIBILITY
@@ -714,6 +781,10 @@
   .driver-team-timeline {
     padding: 21px 17px 23px;
   }
+
+  .driver-team-timeline-connector {
+  margin-top: 33px;
+}
 
   .driver-team-timeline-heading h3 {
     font-size: 16px;
@@ -783,4 +854,33 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* =========================================================
+   FIX: ALIGN ALL TEAM LOGOS AT THE SAME HEIGHT
+========================================================= */
+
+.driver-team-timeline-track {
+  align-items: flex-start !important;
+}
+
+.driver-team-timeline-stop {
+  align-self: flex-start !important;
+  margin-top: 0 !important;
+}
+
+/* Keep all team logos at the same starting position */
+.driver-team-timeline-logo {
+  flex-shrink: 0;
+}
+
+/* Keep team names consistently positioned */
+.driver-team-timeline-team-name {
+  margin-top: 0;
+}
+
+/* Current team badge stays underneath the team name */
+.driver-team-timeline-current {
+  align-self: center;
+  margin-top: 0;
 }
